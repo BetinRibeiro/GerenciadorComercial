@@ -1,36 +1,37 @@
 package br.com.Janelas.Cadastro;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
+import javax.swing.JOptionPane;
+
+import br.com.Bins.Produto.LocalizacaoProduto;
+import br.com.Persistence.Banco;
 
 import java.awt.Color;
-import java.awt.Window.Type;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+@SuppressWarnings("serial")
 public class JFrmCadastroLocalArmazenamento extends JDialog implements ActionListener {
 
 	private JPanel contentPane;
 	private JTextField txtCodigo;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_3;
+	private JTextField txtDescricao;
+	private JTextField txtObsLocal;
+	private JTextField txtCodigoBusca;
 	private JButton btnSalvar;
 	private JButton btnDeletar;
 	private JButton btnApagar;
 	private JButton btnSair;
 	private JButton btnBuscar;
+	private Banco banco = new Banco();
 
 	/**
 	 * Launch the application.
@@ -52,6 +53,7 @@ public class JFrmCadastroLocalArmazenamento extends JDialog implements ActionLis
 	 * Create the frame.
 	 */
 	public JFrmCadastroLocalArmazenamento() {
+		setTitle("Cadastro do Local do Armazenamento do Prouto");
 		setType(Type.UTILITY);
 		// setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 270);
@@ -74,6 +76,7 @@ public class JFrmCadastroLocalArmazenamento extends JDialog implements ActionLis
 		panel.add(lblCdigo);
 
 		txtCodigo = new JTextField();
+		txtCodigo.setEnabled(false);
 		txtCodigo.setBounds(10, 30, 120, 20);
 		panel.add(txtCodigo);
 		txtCodigo.setColumns(10);
@@ -82,17 +85,17 @@ public class JFrmCadastroLocalArmazenamento extends JDialog implements ActionLis
 		lblDescrio.setBounds(10, 55, 93, 20);
 		panel.add(lblDescrio);
 
-		textField = new JTextField();
-		textField.setBounds(10, 75, 355, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		txtDescricao = new JTextField();
+		txtDescricao.setBounds(10, 75, 355, 20);
+		panel.add(txtDescricao);
+		txtDescricao.setColumns(10);
 
-		textField_1 = new JTextField();
-		textField_1.setBounds(10, 125, 355, 20);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		txtObsLocal = new JTextField();
+		txtObsLocal.setBounds(10, 125, 355, 20);
+		panel.add(txtObsLocal);
+		txtObsLocal.setColumns(10);
 
-		JLabel lblc = new JLabel("Especifica\u00E7\u00E3o do local");
+		JLabel lblc = new JLabel("Observa\u00E7\u00E3o da localiza\u00E7\u00E3o");
 		lblc.setBounds(10, 105, 299, 20);
 		panel.add(lblc);
 
@@ -112,14 +115,14 @@ public class JFrmCadastroLocalArmazenamento extends JDialog implements ActionLis
 		btnSair.setBounds(285, 160, 80, 20);
 		panel.add(btnSair);
 
-		JLabel lblPesquisarCdigo = new JLabel("Pesquisar C\u00F3digo");
+		JLabel lblPesquisarCdigo = new JLabel("C\u00F3digo do Local");
 		lblPesquisarCdigo.setBounds(10, 11, 128, 20);
 		contentPane.add(lblPesquisarCdigo);
 
-		textField_3 = new JTextField();
-		textField_3.setBounds(122, 10, 145, 20);
-		contentPane.add(textField_3);
-		textField_3.setColumns(10);
+		txtCodigoBusca = new JTextField();
+		txtCodigoBusca.setBounds(122, 10, 145, 20);
+		contentPane.add(txtCodigoBusca);
+		txtCodigoBusca.setColumns(10);
 
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setBounds(294, 10, 89, 20);
@@ -140,28 +143,112 @@ public class JFrmCadastroLocalArmazenamento extends JDialog implements ActionLis
 
 		switch (acao) {
 		case "Buscar":
-			// TODO - Falta implementar
+			buscar();
 			break;
 		case "Salvar":
-			// TODO - Falta implementar
-
+			salvar();
 			break;
 		case "Deletar":
-			// TODO - Falta implementar
-
+			deletar();
 			break;
 		case "Apagar":
-			// TODO - Falta implementar
-
+			apagar();
 			break;
 		case "Sair":
 			dispose();
-
 			break;
 
 		default:
 			break;
 		}
 
+	}
+
+	private void deletar() {
+		setVisible(false);
+		int a = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja deletar?");
+		System.out.println(a);
+		LocalizacaoProduto c = (LocalizacaoProduto) banco .buscarPorId(LocalizacaoProduto.class, Integer.parseInt(txtCodigo.getText()));
+		if (a==0) {
+			JOptionPane.showMessageDialog(null, "classeficação "+c.getDescricao()+" foi deletada com sucesso!");
+			banco.deletarObjeto(c);
+			apagar();
+			btnDeletar.setEnabled(false);
+		}
+		setVisible(true);
+	}
+
+	private void apagar() {
+		txtCodigoBusca.setText("");
+		txtCodigo.setText("");
+		txtDescricao.setText("");
+		txtObsLocal.setText("");
+		setVisible(false);
+		JOptionPane.showMessageDialog(null,
+				"Pode salvar um local de armazenamento novo agora!");
+		setVisible(true);
+		btnDeletar.setEnabled(false);
+	}
+
+	private void buscar() {
+		try {
+		LocalizacaoProduto c = (LocalizacaoProduto) banco.buscarPorId(LocalizacaoProduto.class, Integer.parseInt(txtCodigoBusca.getText()));
+		System.out.println(c);
+		if (c!=null) {
+			txtObsLocal.setText(c.getObsLocal());
+			txtCodigo.setText(String.valueOf(c.getId()));
+			txtDescricao.setText(c.getDescricao());
+			btnDeletar.setEnabled(true);
+		}if (c==null) {
+			setVisible(false);
+			JOptionPane.showMessageDialog(null, "Código Inexistente!");
+			setVisible(true);
+		}
+		} catch (Exception e) {
+			setVisible(false);
+			JOptionPane.showMessageDialog(null, "Preencha codigo valido para buscar " );
+			setVisible(true);
+		}
+	}
+
+	private void salvar() {
+		try {
+			LocalizacaoProduto c = new LocalizacaoProduto();
+			c.setObsLocal(txtObsLocal.getText());
+			c.setDescricao(txtDescricao.getText());
+			if (txtCodigo.getText().equalsIgnoreCase("")
+					&& !txtDescricao.getText().equalsIgnoreCase("")) {
+				banco.salvarOuAtualizarObjeto(c);
+				this.setVisible(false);
+				JOptionPane.showMessageDialog(null,
+						"Você acabou de criar uma classe \n com a descrição : "
+								+ txtDescricao.getText());
+				dispose();
+			}
+			if (!txtCodigo.getText().equalsIgnoreCase("")
+					&& !txtDescricao.getText().equalsIgnoreCase("")) {
+				c.setId(Integer.parseInt(txtCodigo.getText()));
+				banco.salvarOuAtualizarObjeto(c);
+				this.setVisible(false);
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"Você acabou de atualizar uma classe \n com a descrição : "
+										+ txtDescricao.getText()
+										+ "\n Agora todos os produtos que tinham a antiga descrição terão essa nova");
+				dispose();
+			}
+			if (txtDescricao.getText().equalsIgnoreCase("")) {
+
+				this.setVisible(false);
+				JOptionPane
+						.showMessageDialog(null,
+								"Não deixe campos vazios \n refaça novamente preenchendo todos os compos!");
+				this.setVisible(true);
+			}
+			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERRO - "+e);
+		}
 	}
 }

@@ -11,11 +11,21 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
+import br.com.Janelas.Cadastro.JFrmCadastroCargo;
 import br.com.Janelas.Cadastro.JFrmCadastroClassificacaoProduto;
+import br.com.Janelas.Cadastro.JFrmCadastroCliente;
+import br.com.Janelas.Cadastro.JFrmCadastroContato;
+import br.com.Janelas.Cadastro.JFrmCadastroFornecedor;
+import br.com.Janelas.Cadastro.JFrmCadastroFuncionario;
 import br.com.Janelas.Cadastro.JFrmCadastroLocalArmazenamento;
 import br.com.Janelas.Cadastro.JFrmCadastroProduto;
 
+@SuppressWarnings("serial")
 public class JPnlMenuJanelas extends JPanel implements ActionListener {
+
+	private JMenuItem mntmCadastroDeCliente;
+	private JMenuItem mntmCadastrarFornecedor;
+	private JMenuItem mntmCadastrarContato;
 
 	/**
 	 * Create the panel.
@@ -37,28 +47,80 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		mnArquivo.add(mnProdutos);
 		
 		JMenuItem mntmCadastrarProduto = new JMenuItem("Cadastrar Produto");
+		mntmCadastrarProduto.setBackground(new Color(230, 230, 250));
 		mnProdutos.add(mntmCadastrarProduto);
 		mntmCadastrarProduto.addActionListener(this);
 		
 		JMenuItem mntmCadatrarClasse = new JMenuItem("Cadatrar Classifica\u00E7\u00E3o de Produtos");
+		mntmCadatrarClasse.setBackground(new Color(230, 230, 250));
 		mntmCadatrarClasse.addActionListener(this);
 		mnProdutos.add(mntmCadatrarClasse);
 		
 		JMenuItem mntmCadastraLocalDe = new JMenuItem("Cadastra Local de Armazenamento");
+		mntmCadastraLocalDe.setBackground(new Color(230, 230, 250));
 		mntmCadastraLocalDe.addActionListener(this);
 		mnProdutos.add(mntmCadastraLocalDe);
 		
-		JMenu mntmNewMenuItem_1 = new JMenu("Empresa");
-		mnArquivo.add(mntmNewMenuItem_1);
+		JMenuItem mntmConsultarProduto = new JMenuItem("Consultar Produto");
+		mnProdutos.add(mntmConsultarProduto);
+		
+		JMenuItem mntmConsultarClassificaoDe = new JMenuItem("Consultar Classifica\u00E7\u00E3o de Produtos");
+		mnProdutos.add(mntmConsultarClassificaoDe);
+		
+		JMenuItem mntmConsultarLocalDe = new JMenuItem("Consultar Local de Armazenamento");
+		mnProdutos.add(mntmConsultarLocalDe);
 		
 		JMenu mntmNewMenuItem_3 = new JMenu("Funcionarios/Colaboradores");
 		mnArquivo.add(mntmNewMenuItem_3);
 		
+		JMenuItem mntmCadastrarFuncionario = new JMenuItem("Cadastrar Funcionario");
+		mntmCadastrarFuncionario.setBackground(new Color(230, 230, 250));
+		mntmNewMenuItem_3.add(mntmCadastrarFuncionario);
+		mntmCadastrarFuncionario.addActionListener(this);
+		
+		JMenuItem mntmConsultarFuncionario = new JMenuItem("Consultar Funcionario");
+		mntmNewMenuItem_3.add(mntmConsultarFuncionario);
+		
+		JMenu mntmNewMenuItem_1 = new JMenu("Empresa");
+		mnArquivo.add(mntmNewMenuItem_1);
+		
+		JMenuItem mntmCadastrarSetor = new JMenuItem("Cadastrar Setor");
+		mntmNewMenuItem_1.add(mntmCadastrarSetor);
+		
+		JMenuItem mntmCadastrarCargo = new JMenuItem("Cadastrar Cargo");
+		mntmCadastrarCargo.setBackground(new Color(230, 230, 250));
+		mntmNewMenuItem_1.add(mntmCadastrarCargo);
+		mntmCadastrarCargo.addActionListener(this);
+		
+		JMenuItem mntmConsultarSetor = new JMenuItem("Consultar Setor");
+		mntmNewMenuItem_1.add(mntmConsultarSetor);
+		
+		JMenuItem mntmConsultarCargo = new JMenuItem("Consultar Cargo");
+		mntmNewMenuItem_1.add(mntmConsultarCargo);
+		
 		JMenu mntmNewMenuItem = new JMenu("Clientes");
 		mnArquivo.add(mntmNewMenuItem);
 		
+		mntmCadastroDeCliente = new JMenuItem("Cadastro de Cliente");
+		mntmCadastroDeCliente.setBackground(new Color(230, 230, 250));
+		mntmNewMenuItem.add(mntmCadastroDeCliente);
+		
+		JMenuItem mntmConsultarCliente = new JMenuItem("Consultar Cliente");
+		mntmNewMenuItem.add(mntmConsultarCliente);
+		mntmCadastroDeCliente.addActionListener(this);
+		
 		JMenu mnNewMenu = new JMenu("Fornecedores");
 		mnArquivo.add(mnNewMenu);
+		
+		mntmCadastrarFornecedor = new JMenuItem("Cadastrar Fornecedor");
+		mntmCadastrarFornecedor.setBackground(new Color(230, 230, 250));
+		mnNewMenu.add(mntmCadastrarFornecedor);
+		mntmCadastrarFornecedor.addActionListener(this);
+		
+		mntmCadastrarContato = new JMenuItem("Cadastrar Contato");
+		mntmCadastrarContato.setBackground(new Color(230, 230, 250));
+		mnNewMenu.add(mntmCadastrarContato);
+		mntmCadastrarContato.addActionListener(this);
 		
 		JMenu mnServios_1 = new JMenu("Servi\u00E7os");
 		mnArquivo.add(mnServios_1);
@@ -147,10 +209,29 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 			y.setVisible(true);
 			
 			break;
+			case"Cadastrar Funcionario":
+				JFrmCadastroFuncionario a = new JFrmCadastroFuncionario();
+				a.setVisible(true);
+			break;
+			case"Cadastrar Cargo":
+				JFrmCadastroCargo ar = new JFrmCadastroCargo();
+				ar.setVisible(true);
+			break;
+			case"Cadastro de Cliente":
+				JFrmCadastroCliente ccl = new JFrmCadastroCliente();
+				ccl.setVisible(true);
+			break;
+			case"Cadastrar Fornecedor":
+				JFrmCadastroFornecedor a1 = new JFrmCadastroFornecedor();
+				a1.setVisible(true);
+			break;
+			case"Cadastrar Contato":
+				JFrmCadastroContato a2 = new JFrmCadastroContato();
+				a2.setVisible(true);
+			break;
 		default:
 			break;
 		}
 		
 	}
-
 }

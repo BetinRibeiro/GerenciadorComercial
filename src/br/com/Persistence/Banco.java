@@ -5,9 +5,11 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import br.com.Bins.Produto.Produto;
 import br.com.Persistence.HibernateUtil;
 
 
@@ -135,7 +137,18 @@ public class Banco {
 		}
 	}
 		
-	
-	
+	public List<?> BuscaNome(Class<?> classe, String nomeBuscar, String coluna) {  
+//		 try {
+				
+			  if (nomeBuscar == null || nomeBuscar.trim().equals(""))  
+			       return (List<?>) this.sessao.createCriteria(classe).list();  
+//			  System.out.println("--"+(List<?>) this.sessao.createCriteria(classe).add(Restrictions.ilike(coluna, "%"+nomeBuscar+"%", MatchMode.ANYWHERE)));
+			   return sessao.createCriteria(classe).add(Restrictions.like("descricao", nomeBuscar, MatchMode.ANYWHERE)).list();
+					   //(List<?>) this.sessao.createCriteria(classe).add(Restrictions.like(coluna, "%"+nomeBuscar+"%")).list();  
+//			    } catch (Exception e) {
+//			    	 System.out.println(e);
+//			}
+//		 return null;
+	}
 	
 }
