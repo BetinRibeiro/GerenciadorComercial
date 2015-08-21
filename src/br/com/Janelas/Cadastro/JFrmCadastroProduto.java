@@ -47,26 +47,14 @@ public class JFrmCadastroProduto extends JDialog implements ActionListener {
 	private ArrayList<Integer> listaLocal = new ArrayList<Integer>();
 	private ArrayList<Integer> listaClass = new ArrayList<Integer>();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JFrmCadastroProduto frame = new JFrmCadastroProduto();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
+	 * @param idProdParaAlterar 
 	 */
-	public JFrmCadastroProduto() {
+	public JFrmCadastroProduto(Integer idProdParaAlterar) {
+		
+		
 		setTitle("Cadastro de Produto");
 		setType(Type.UTILITY);
 		// setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
@@ -118,6 +106,8 @@ public class JFrmCadastroProduto extends JDialog implements ActionListener {
 		panel.add(lblEstMinimo);
 
 		txtPrec = new JTextField();
+		txtPrec.setEnabled(false);
+		txtPrec.setText("0.00");
 		txtPrec.setBounds(10, 170, 120, 20);
 		panel.add(txtPrec);
 		txtPrec.setColumns(10);
@@ -174,6 +164,11 @@ public class JFrmCadastroProduto extends JDialog implements ActionListener {
 		btnSalvar.addActionListener(this);
 
 		txtCodigo.setText("");
+		
+		if (idProdParaAlterar!=0) {
+			txtCodPesqu.setText(String.valueOf(idProdParaAlterar));
+			buscar();
+		}
 	}
 
 	private String[] listaClass() {
@@ -235,21 +230,19 @@ public class JFrmCadastroProduto extends JDialog implements ActionListener {
 	}
 
 	private void deletar() {
-		setVisible(false);
-		int a = JOptionPane.showConfirmDialog(null,
+		int a = JOptionPane.showConfirmDialog(contentPane,
 				"Tem certeza que deseja deletar?");
 		System.out.println(a);
 		Produto c = (Produto) banco.buscarPorId(Produto.class,
 				Integer.parseInt(txtCodigo.getText()));
 		if (a == 0) {
-			JOptionPane.showMessageDialog(null,
+			JOptionPane.showMessageDialog(contentPane,
 					"classeficação " + c.getDescricao()
 							+ " foi deletada com sucesso!");
 			banco.deletarObjeto(c);
 			apagar();
 			btnDeletar.setEnabled(false);
 		}
-		setVisible(true);
 	}
 
 	private void apagar() {
@@ -258,10 +251,8 @@ public class JFrmCadastroProduto extends JDialog implements ActionListener {
 		txtDescr.setText("");
 		txtEstMin.setText("");
 		txtPrec.setText("");
-		setVisible(false);
-		JOptionPane.showMessageDialog(null,
+		JOptionPane.showMessageDialog(contentPane,
 				"Pode salvar um produto novo agora!");
-		setVisible(true);
 
 		btnDeletar.setEnabled(false);
 	}
@@ -292,15 +283,11 @@ public class JFrmCadastroProduto extends JDialog implements ActionListener {
 				btnDeletar.setEnabled(true);
 			}
 			if (c == null) {
-				setVisible(false);
-				JOptionPane.showMessageDialog(null, "Código Inexistente!");
-				setVisible(true);
+				JOptionPane.showMessageDialog(contentPane, "Código Inexistente!");
 			}
 		} catch (Exception e) {
-			setVisible(false);
-			JOptionPane.showMessageDialog(null,
+			JOptionPane.showMessageDialog(contentPane,
 					"Preencha codigo valido para buscar ");
-			setVisible(true);
 		}
 	}
 
@@ -328,30 +315,22 @@ public class JFrmCadastroProduto extends JDialog implements ActionListener {
 			}
 			if (p.getDescricao() == "") {
 				p.setDescricao(txtDescr.getText());
-				setVisible(false);
-				JOptionPane.showMessageDialog(null, "Descrição invalida");
-				setVisible(true);
+				JOptionPane.showMessageDialog(contentPane, "Descrição invalida");
 			}
 
 			if (p.getDescricao() == "") {
-				setVisible(false);
-				JOptionPane.showMessageDialog(null,
+				JOptionPane.showMessageDialog(contentPane,
 						"Descreva alguma coisa na descrição.");
-				setVisible(true);
 			}
 			if (p.getDescricao() != "") {
-				setVisible(false);
 				banco.salvarOuAtualizarObjeto(p);
-				JOptionPane.showMessageDialog(null,
+				JOptionPane.showMessageDialog(contentPane,
 						"Produto salvo com sucesso!");
-				setVisible(true);
 				apagar();
 			}
 		} catch (Exception e) {
-			setVisible(false);
 			JOptionPane
-					.showMessageDialog(null, "Erro ao cadastrar o produto, ");
-			setVisible(true);
+					.showMessageDialog(contentPane, "Erro ao cadastrar o produto, ");
 		}
 	}
 }

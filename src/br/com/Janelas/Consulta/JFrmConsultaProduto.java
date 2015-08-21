@@ -16,13 +16,13 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTable;
-
 import javax.swing.ListSelectionModel;
 import javax.transaction.Transactional.TxType;
 
 import br.com.Bins.Produto.Produto;
+import br.com.Janelas.Cadastro.JFrmCadastroProduto;
 import br.com.Persistence.Banco;
-import br.com.TableModel.TMProduto;
+import br.com.TableModel.*;;
 
 public class JFrmConsultaProduto extends JDialog implements ActionListener {
 
@@ -32,9 +32,9 @@ public class JFrmConsultaProduto extends JDialog implements ActionListener {
 	private JButton btnBuscar;
 	private JButton btnSair;
 	private JButton btnAlterar;
-	private JButton btnConsultar;
 	private Banco banco = new Banco();
-	private TMProduto modelProd = new TMProduto();
+	private TMProdutoMaterial modelProd = new TMProdutoMaterial();
+	private int a;
 
 	/**
 	 * Launch the application.
@@ -105,14 +105,10 @@ public class JFrmConsultaProduto extends JDialog implements ActionListener {
 		btnAlterar.setBounds(399, 375, 89, 20);
 		contentPane.add(btnAlterar);
 		btnAlterar.addActionListener(this);
-
-		btnConsultar = new JButton("Consultar");
-		btnConsultar.setBounds(300, 375, 89, 20);
-		contentPane.add(btnConsultar);
-		btnConsultar.addActionListener(this);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setAlwaysOnTop(true);
+		btnAlterar.setEnabled(false);
 	}
 
 	@Override
@@ -142,32 +138,40 @@ public class JFrmConsultaProduto extends JDialog implements ActionListener {
 	}
 
 	private void consultar() {
-		// TODO Auto-generated method stub
+		// TODO Não existe isso ainda, não vi a necessidade
 
 	}
 
 	private void altearar() {
-		// TODO Auto-generated method stub
-
+		try {
+			JFrmCadastroProduto c = new JFrmCadastroProduto( (Integer) tableProdutos.getValueAt(
+					tableProdutos.getSelectedRow(), 0));
+			txtNomeBusca.setText("");
+			modelProd.removeTudo();
+			c.setVisible(true);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(contentPane, "ERRO ao alterar um produto.");
+		}
 	}
 
 	private void buscar() {
-
-
+		try {
 			modelProd.removeTudo();
+			a = 0;
 			List<?> lista = banco.BuscaNome(Produto.class,
 					txtNomeBusca.getText(), "descricao");
 			for (int i = 0; i < lista.size(); i++) {
-
 				Produto produto = (Produto) lista.get(i);
 				modelProd.addRow(produto);
-
+				a = 1;
 			}
-//		} catch (Exception e) {
-//			setVisible(false);
-//			JOptionPane.showMessageDialog(null, "ERRO ao buscar um produto.");
-//			setVisible(true);
-//		}
-
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(contentPane, "ERRO ao buscar um produto.");
+		}
+		if (a==0) {
+			btnAlterar.setEnabled(false);
+		}else {
+			btnAlterar.setEnabled(true);
+		}
 	}
 }

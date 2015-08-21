@@ -10,10 +10,10 @@ import br.com.Bins.Produto.Produto;
 
 
 @SuppressWarnings("serial")
-public class TMProduto extends AbstractTableModel {
+public class TMProdutoMaterial extends AbstractTableModel {
 
 	private List<Produto> dados;
-	private String[] colunas = { "Código", "Descrição", "Quantidade", "Preço",
+	private String[] colunas = { "Código", "Descrição", "Quantidade", "Custo",
 			};
 	DecimalFormat df = new DecimalFormat("0.00");
 
@@ -22,7 +22,7 @@ public class TMProduto extends AbstractTableModel {
 	// você vai precisar adicionar um TableModelListener ao seu model que
 	// executará o método
 	// tableChanged toda vez que os dados da JTable forem alterados.
-	public TMProduto() {
+	public TMProdutoMaterial() {
 		dados = new ArrayList<Produto>();
 
 	}
@@ -91,7 +91,7 @@ public class TMProduto extends AbstractTableModel {
 			return (dados.get(linha).getQuantidade());
 		
 		case 3:
-			return df.format(dados.get(linha).getPreco());
+			return df.format(dados.get(linha).getCusto());
 
 		}
 		return null;

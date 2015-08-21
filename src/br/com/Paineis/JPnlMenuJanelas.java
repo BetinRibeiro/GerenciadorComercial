@@ -19,6 +19,7 @@ import br.com.Janelas.Cadastro.JFrmCadastroFornecedor;
 import br.com.Janelas.Cadastro.JFrmCadastroFuncionario;
 import br.com.Janelas.Cadastro.JFrmCadastroLocalArmazenamento;
 import br.com.Janelas.Cadastro.JFrmCadastroProduto;
+import br.com.Janelas.Consulta.*;
 
 @SuppressWarnings("serial")
 public class JPnlMenuJanelas extends JPanel implements ActionListener {
@@ -26,6 +27,7 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 	private JMenuItem mntmCadastroDeCliente;
 	private JMenuItem mntmCadastrarFornecedor;
 	private JMenuItem mntmCadastrarContato;
+	private JMenuItem mntmConsultarProduto;
 
 	/**
 	 * Create the panel.
@@ -61,8 +63,10 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		mntmCadastraLocalDe.addActionListener(this);
 		mnProdutos.add(mntmCadastraLocalDe);
 		
-		JMenuItem mntmConsultarProduto = new JMenuItem("Consultar Produto");
+		mntmConsultarProduto = new JMenuItem("Consultar Produto");
+		mntmConsultarProduto.setBackground(new Color(230, 230, 250));
 		mnProdutos.add(mntmConsultarProduto);
+		mntmConsultarProduto.addActionListener(this);
 		
 		JMenuItem mntmConsultarClassificaoDe = new JMenuItem("Consultar Classifica\u00E7\u00E3o de Produtos");
 		mnProdutos.add(mntmConsultarClassificaoDe);
@@ -194,7 +198,7 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		
 		switch (acao) {
 		case "Cadastrar Produto":
-			JFrmCadastroProduto c = new JFrmCadastroProduto();
+			JFrmCadastroProduto c = new JFrmCadastroProduto(0);
 			c.setVisible(true);
 			
 			break;
@@ -228,6 +232,10 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 			case"Cadastrar Contato":
 				JFrmCadastroContato a2 = new JFrmCadastroContato();
 				a2.setVisible(true);
+			break;
+			case"Consultar Produto":
+				JFrmConsultaProduto a3 = new JFrmConsultaProduto();
+				a3.setVisible(true);
 			break;
 		default:
 			break;
