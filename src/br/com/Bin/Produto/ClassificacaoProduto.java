@@ -1,4 +1,4 @@
-package br.com.Bins.Produto;
+package br.com.Bin.Produto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "localizacao_produto")
-public class LocalizacaoProduto {
+@Table(name = "classificacao_produto")
+public class ClassificacaoProduto {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +19,8 @@ public class LocalizacaoProduto {
 	@Column(name = "descricao")
 	private String descricao;
 	
-	@Column(name = "obs")
-	private String obsLocal;
+	@Column(name = "cod_fiscal")
+	private String codFiscal;
 
 	public Integer getId() {
 		return id;
@@ -38,13 +38,14 @@ public class LocalizacaoProduto {
 		this.descricao = descricao;
 	}
 
-	public String getObsLocal() {
-		return obsLocal;
+	public String getCodFiscal() {
+		return codFiscal;
 	}
 
-	public void setObsLocal(String obsLocal) {
-		this.obsLocal = obsLocal;
+	public void setCodFiscal(String codFiscal) {
+		this.codFiscal = codFiscal;
 	}
-
 	
+	
+
 }

@@ -1,4 +1,4 @@
-package br.com.Bins.Produto;
+package br.com.Bin.Produto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
