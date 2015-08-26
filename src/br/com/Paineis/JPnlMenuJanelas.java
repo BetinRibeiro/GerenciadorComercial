@@ -11,15 +11,16 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
-import br.com.Janelas.Cadastro.JFrmCadastroCargo;
-import br.com.Janelas.Cadastro.JFrmCadastroClassificacaoProduto;
-import br.com.Janelas.Cadastro.JFrmCadastroCliente;
-import br.com.Janelas.Cadastro.JFrmCadastroContato;
-import br.com.Janelas.Cadastro.JFrmCadastroFornecedor;
-import br.com.Janelas.Cadastro.JFrmCadastroFuncionario;
-import br.com.Janelas.Cadastro.JFrmCadastroLocalArmazenamento;
-import br.com.Janelas.Cadastro.JFrmCadastroProduto;
-import br.com.Janelas.Consulta.*;
+import br.com.Janela.Cadastro.JFrmCadastroCargo;
+import br.com.Janela.Cadastro.JFrmCadastroClassificacaoProduto;
+import br.com.Janela.Cadastro.JFrmCadastroCliente;
+import br.com.Janela.Cadastro.JFrmCadastroContato;
+import br.com.Janela.Cadastro.JFrmCadastroFornecedor;
+import br.com.Janela.Cadastro.JFrmCadastroFuncionario;
+import br.com.Janela.Cadastro.JFrmCadastroLocalArmazenamento;
+import br.com.Janela.Cadastro.JFrmCadastroProduto;
+import br.com.Janela.Consulta.*;
+import br.com.Janela.Movimentacao.JFrmCompraProduto;
 
 @SuppressWarnings("serial")
 public class JPnlMenuJanelas extends JPanel implements ActionListener {
@@ -79,6 +80,7 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		
 		JMenuItem mntmConsultarFuncionario = new JMenuItem("Consultar Funcionario");
 		mntmNewMenuItem_3.add(mntmConsultarFuncionario);
+		mntmConsultarFuncionario.addActionListener(this);
 		
 		JMenu mntmNewMenuItem_1 = new JMenu("Empresa");
 		mnArquivo.add(mntmNewMenuItem_1);
@@ -132,6 +134,13 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		JMenuItem mnSair = new JMenuItem("Sair");
 		mnArquivo.add(mnSair);
 		
+		JMenu mnMovimentao = new JMenu("Movimenta\u00E7\u00E3o");
+		menuBar.add(mnMovimentao);
+		
+		JMenuItem mntmNovaCompra = new JMenuItem("Compra");
+		mnMovimentao.add(mntmNovaCompra);
+		mntmNovaCompra.addActionListener(this);
+		
 		JMenu mnConsulta = new JMenu("Consulta");
 		menuBar.add(mnConsulta);
 		
@@ -164,6 +173,7 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		
 		JMenuItem mntmCompras_1 = new JMenuItem("Compras");
 		mnGrafico.add(mntmCompras_1);
+		mntmCompras_1.addActionListener(this);
 		
 		JMenuItem mntmVendas_1 = new JMenuItem("Vendas");
 		mnGrafico.add(mntmVendas_1);
@@ -208,7 +218,7 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 			
 			break;
 			case"Cadastrar Funcionario":
-				JFrmCadastroFuncionario a = new JFrmCadastroFuncionario();
+				JFrmCadastroFuncionario a = new JFrmCadastroFuncionario(0);
 				a.setVisible(true);
 			break;
 			case"Cadastrar Cargo":
@@ -240,6 +250,17 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 				JFrmConsultalocalizacaoProduto a5 = new JFrmConsultalocalizacaoProduto();
 				a5.setVisible(true);
 			break;
+			case"Compra":
+				JFrmCompraProduto a6 = new JFrmCompraProduto();
+				a6.setVisible(true);
+			break;
+			
+			case"Consultar Funcionario":
+				JFrmConsultaFuncionario a7 = new JFrmConsultaFuncionario();
+				a7.setVisible(true);
+			break;
+			
+			
 		default:
 			break;
 		}
