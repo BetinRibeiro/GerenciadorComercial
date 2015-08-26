@@ -19,7 +19,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.transaction.Transactional.TxType;
 
-import br.com.Bins.Produto.Produto;
+import br.com.Bin.Produto.Produto;
 import br.com.Janelas.Cadastro.JFrmCadastroProduto;
 import br.com.Persistence.Banco;
 import br.com.TableModel.*;;
@@ -33,7 +33,7 @@ public class JFrmConsultaProduto extends JDialog implements ActionListener {
 	private JButton btnSair;
 	private JButton btnAlterar;
 	private Banco banco = new Banco();
-	private TMProdutoMaterial modelProd = new TMProdutoMaterial();
+	private TMProdutoMateriala modelProd = new TMProdutoMateriala();
 	private int a;
 
 	/**

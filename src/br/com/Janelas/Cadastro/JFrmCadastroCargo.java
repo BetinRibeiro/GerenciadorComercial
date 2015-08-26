@@ -160,13 +160,13 @@ public class JFrmCadastroCargo extends JDialog implements ActionListener {
 
 	private void deletar() {
 		setVisible(false);
-		int a = JOptionPane.showConfirmDialog(null,
+		int a = JOptionPane.showConfirmDialog(contentPane,
 				"Tem certeza que deseja deletar?");
 		System.out.println(a);
 		Cargo c = (Cargo) banco.buscarPorId(Cargo.class,
 				Integer.parseInt(txtCodigo.getText()));
 		if (a == 0) {
-			JOptionPane.showMessageDialog(null,
+			JOptionPane.showMessageDialog(contentPane,
 					"classeficação " + c.getDescricao()
 							+ " foi deletada com sucesso!");
 			banco.deletarObjeto(c);
@@ -181,7 +181,7 @@ public class JFrmCadastroCargo extends JDialog implements ActionListener {
 		txtDescricao.setText("");
 		txtPesquisaNome.setText("");
 		setVisible(false);
-		JOptionPane.showMessageDialog(null, "Pode salvar um cargo novo agora!");
+		JOptionPane.showMessageDialog(contentPane, "Pode salvar um cargo novo agora!");
 		setVisible(true);
 		btnDeletar.setEnabled(false);
 	}
@@ -198,12 +198,12 @@ public class JFrmCadastroCargo extends JDialog implements ActionListener {
 			}
 			if (c == null) {
 				setVisible(false);
-				JOptionPane.showMessageDialog(null, "Código Inexistente!");
+				JOptionPane.showMessageDialog(contentPane, "Código Inexistente!");
 				setVisible(true);
 			}
 		} catch (Exception e) {
 			setVisible(false);
-			JOptionPane.showMessageDialog(null,
+			JOptionPane.showMessageDialog(contentPane,
 					"Preencha codigo valido para buscar ");
 			setVisible(true);
 		}
@@ -217,7 +217,7 @@ public class JFrmCadastroCargo extends JDialog implements ActionListener {
 					&& !txtDescricao.getText().equalsIgnoreCase("")) {
 				banco.salvarOuAtualizarObjeto(c);
 				this.setVisible(false);
-				JOptionPane.showMessageDialog(null,
+				JOptionPane.showMessageDialog(contentPane,
 						"Você acabou de criar um cargo \n com a descrição : "
 								+ txtDescricao.getText());
 				dispose();
@@ -229,7 +229,7 @@ public class JFrmCadastroCargo extends JDialog implements ActionListener {
 				this.setVisible(false);
 				JOptionPane
 						.showMessageDialog(
-								null,
+								contentPane,
 								"Você acabou de atualizar um cargo \n com a descrição : "
 										+ txtDescricao.getText()
 										+ "\n Agora todos os funcionario que tinham a antigo cargo terão essa novo");
@@ -239,13 +239,13 @@ public class JFrmCadastroCargo extends JDialog implements ActionListener {
 
 				this.setVisible(false);
 				JOptionPane
-						.showMessageDialog(null,
+						.showMessageDialog(contentPane,
 								"Não deixe campos vazios \n refaça novamente preenchendo todos os compos!");
 				this.setVisible(true);
 			}
 
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERRO - " + e);
+			JOptionPane.showMessageDialog(contentPane, "ERRO - " + e);
 		}
 	}
 

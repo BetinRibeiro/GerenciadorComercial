@@ -9,7 +9,6 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import br.com.Bins.Produto.Produto;
 import br.com.Persistence.HibernateUtil;
 
 public class Banco {

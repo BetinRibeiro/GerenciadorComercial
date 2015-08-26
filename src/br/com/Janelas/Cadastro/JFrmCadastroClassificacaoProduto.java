@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
-import br.com.Bins.Produto.ClassificacaoProduto;
+import br.com.Bin.Produto.ClassificacaoProduto;
 import br.com.Persistence.Banco;
 
 import java.awt.Color;
@@ -34,26 +34,11 @@ public class JFrmCadastroClassificacaoProduto extends JDialog implements
 	private JButton btnBuscar;
 	private Banco banco = new Banco();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JFrmCadastroClassificacaoProduto frame = new JFrmCadastroClassificacaoProduto();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public JFrmCadastroClassificacaoProduto() {
+	public JFrmCadastroClassificacaoProduto(int idClassAlterar) {
 		setTitle("Cadastro da Classifica\u00E7\u00E3o dos Produtos");
 		setType(Type.UTILITY);
 		// setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
@@ -120,7 +105,7 @@ public class JFrmCadastroClassificacaoProduto extends JDialog implements
 		lblPesquisarNM.setBounds(10, 10, 128, 20);
 		contentPane.add(lblPesquisarNM);
 
-		txtPesquisaNome = new JTextField();
+		txtPesquisaNome = new JTextField("Código para pesquisar");
 		txtPesquisaNome.setBounds(122, 10, 145, 20);
 		contentPane.add(txtPesquisaNome);
 		txtPesquisaNome.setColumns(10);
@@ -135,6 +120,10 @@ public class JFrmCadastroClassificacaoProduto extends JDialog implements
 		btnSair.addActionListener(this);
 		btnSalvar.addActionListener(this);
 		btnDeletar.setEnabled(false);
+		if (idClassAlterar!=0) {
+			txtPesquisaNome.setText(String.valueOf(idClassAlterar));
+			buscar();
+		}
 	}
 
 	@Override
@@ -167,11 +156,11 @@ public class JFrmCadastroClassificacaoProduto extends JDialog implements
 
 	private void deletar() {
 		setVisible(false);
-		int a = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja deletar?");
+		int a = JOptionPane.showConfirmDialog(contentPane, "Tem certeza que deseja deletar?");
 		System.out.println(a);
 		ClassificacaoProduto c = (ClassificacaoProduto) banco.buscarPorId(ClassificacaoProduto.class, Integer.parseInt(txtCodigo.getText()));
 		if (a==0) {
-			JOptionPane.showMessageDialog(null, "classeficação "+c.getDescricao()+" foi deletada com sucesso!");
+			JOptionPane.showMessageDialog(contentPane, "classeficação "+c.getDescricao()+" foi deletada com sucesso!");
 			banco.deletarObjeto(c);
 			apagar();
 			btnDeletar.setEnabled(false);
@@ -185,7 +174,7 @@ public class JFrmCadastroClassificacaoProduto extends JDialog implements
 		txtDescricao.setText("");
 		txtPesquisaNome.setText("");
 		setVisible(false);
-		JOptionPane.showMessageDialog(null,
+		JOptionPane.showMessageDialog(contentPane,
 				"Pode salvar uma classificação nova agora!");
 		setVisible(true);
 		btnDeletar.setEnabled(false);
@@ -202,12 +191,12 @@ public class JFrmCadastroClassificacaoProduto extends JDialog implements
 			btnDeletar.setEnabled(true);
 		}if (c==null) {
 			setVisible(false);
-			JOptionPane.showMessageDialog(null, "Código Inexistente!");
+			JOptionPane.showMessageDialog(contentPane, "Código Inexistente!");
 			setVisible(true);
 		}
 		} catch (Exception e) {
 			setVisible(false);
-			JOptionPane.showMessageDialog(null, "Preencha codigo valido para buscar " );
+			JOptionPane.showMessageDialog(contentPane, "Preencha codigo valido para buscar " );
 			setVisible(true);
 		}
 	}
@@ -221,7 +210,7 @@ public class JFrmCadastroClassificacaoProduto extends JDialog implements
 					&& !txtDescricao.getText().equalsIgnoreCase("")) {
 				banco.salvarOuAtualizarObjeto(c);
 				this.setVisible(false);
-				JOptionPane.showMessageDialog(null,
+				JOptionPane.showMessageDialog(contentPane,
 						"Você acabou de criar uma classe \n com a descrição : "
 								+ txtDescricao.getText());
 				dispose();
@@ -233,7 +222,7 @@ public class JFrmCadastroClassificacaoProduto extends JDialog implements
 				this.setVisible(false);
 				JOptionPane
 						.showMessageDialog(
-								null,
+								contentPane,
 								"Você acabou de atualizar uma classe \n com a descrição : "
 										+ txtDescricao.getText()
 										+ "\n Agora todos os produtos que tinham a antiga descrição terão essa nova");
@@ -243,13 +232,13 @@ public class JFrmCadastroClassificacaoProduto extends JDialog implements
 
 				this.setVisible(false);
 				JOptionPane
-						.showMessageDialog(null,
+						.showMessageDialog(contentPane,
 								"Não deixe campos vazios \n refaça novamente preenchendo todos os compos!");
 				this.setVisible(true);
 			}
 			
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERRO - "+e);
+			JOptionPane.showMessageDialog(contentPane, "ERRO - "+e);
 		}
 	}
 }

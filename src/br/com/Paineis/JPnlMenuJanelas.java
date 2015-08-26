@@ -49,22 +49,18 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		mnArquivo.add(mnProdutos);
 		
 		JMenuItem mntmCadastrarProduto = new JMenuItem("Cadastrar Produto");
-		mntmCadastrarProduto.setBackground(new Color(230, 230, 250));
 		mnProdutos.add(mntmCadastrarProduto);
 		mntmCadastrarProduto.addActionListener(this);
 		
 		JMenuItem mntmCadatrarClasse = new JMenuItem("Cadatrar Classifica\u00E7\u00E3o de Produtos");
-		mntmCadatrarClasse.setBackground(new Color(230, 230, 250));
 		mntmCadatrarClasse.addActionListener(this);
 		mnProdutos.add(mntmCadatrarClasse);
 		
 		JMenuItem mntmCadastraLocalDe = new JMenuItem("Cadastra Local de Armazenamento");
-		mntmCadastraLocalDe.setBackground(new Color(230, 230, 250));
 		mntmCadastraLocalDe.addActionListener(this);
 		mnProdutos.add(mntmCadastraLocalDe);
 		
 		mntmConsultarProduto = new JMenuItem("Consultar Produto");
-		mntmConsultarProduto.setBackground(new Color(230, 230, 250));
 		mnProdutos.add(mntmConsultarProduto);
 		mntmConsultarProduto.addActionListener(this);
 		
@@ -78,7 +74,6 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		mnArquivo.add(mntmNewMenuItem_3);
 		
 		JMenuItem mntmCadastrarFuncionario = new JMenuItem("Cadastrar Funcionario");
-		mntmCadastrarFuncionario.setBackground(new Color(230, 230, 250));
 		mntmNewMenuItem_3.add(mntmCadastrarFuncionario);
 		mntmCadastrarFuncionario.addActionListener(this);
 		
@@ -92,7 +87,6 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		mntmNewMenuItem_1.add(mntmCadastrarSetor);
 		
 		JMenuItem mntmCadastrarCargo = new JMenuItem("Cadastrar Cargo");
-		mntmCadastrarCargo.setBackground(new Color(230, 230, 250));
 		mntmNewMenuItem_1.add(mntmCadastrarCargo);
 		mntmCadastrarCargo.addActionListener(this);
 		
@@ -106,7 +100,6 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		mnArquivo.add(mntmNewMenuItem);
 		
 		mntmCadastroDeCliente = new JMenuItem("Cadastro de Cliente");
-		mntmCadastroDeCliente.setBackground(new Color(230, 230, 250));
 		mntmNewMenuItem.add(mntmCadastroDeCliente);
 		
 		JMenuItem mntmConsultarCliente = new JMenuItem("Consultar Cliente");
@@ -117,12 +110,10 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		mnArquivo.add(mnNewMenu);
 		
 		mntmCadastrarFornecedor = new JMenuItem("Cadastrar Fornecedor");
-		mntmCadastrarFornecedor.setBackground(new Color(230, 230, 250));
 		mnNewMenu.add(mntmCadastrarFornecedor);
 		mntmCadastrarFornecedor.addActionListener(this);
 		
 		mntmCadastrarContato = new JMenuItem("Cadastrar Contato");
-		mntmCadastrarContato.setBackground(new Color(230, 230, 250));
 		mnNewMenu.add(mntmCadastrarContato);
 		mntmCadastrarContato.addActionListener(this);
 		
@@ -188,6 +179,9 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		
 		JMenuItem mntmHelp = new JMenuItem("Help");
 		mnAjuda.add(mntmHelp);
+		
+		mntmConsultarClassificaoDe.addActionListener(this);
+		mntmConsultarLocalDe.addActionListener(this);
 	}
 
 	@Override
@@ -204,12 +198,12 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 			break;
 			
 		case "Cadatrar Classifica\u00E7\u00E3o de Produtos":
-			JFrmCadastroClassificacaoProduto t = new JFrmCadastroClassificacaoProduto();
+			JFrmCadastroClassificacaoProduto t = new JFrmCadastroClassificacaoProduto(0);
 			t.setVisible(true);
 			
 			break;
 		case "Cadastra Local de Armazenamento":
-			JFrmCadastroLocalArmazenamento y = new JFrmCadastroLocalArmazenamento();
+			JFrmCadastroLocalArmazenamento y = new JFrmCadastroLocalArmazenamento(0);
 			y.setVisible(true);
 			
 			break;
@@ -236,6 +230,15 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 			case"Consultar Produto":
 				JFrmConsultaProduto a3 = new JFrmConsultaProduto();
 				a3.setVisible(true);
+			break;
+			case"Consultar Classifica\u00E7\u00E3o de Produtos":
+				JFrmConsultaClasseProduto a4 = new JFrmConsultaClasseProduto();
+				a4.setVisible(true);
+			break;
+			
+			case"Consultar Local de Armazenamento":
+				JFrmConsultalocalizacaoProduto a5 = new JFrmConsultalocalizacaoProduto();
+				a5.setVisible(true);
 			break;
 		default:
 			break;

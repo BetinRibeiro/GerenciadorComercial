@@ -11,9 +11,9 @@
 		<property name="hibernate.hbm2ddl.auto">update</property>
 
 
-		<mapping class="br.com.Bins.Produto.Produto" />
-		<mapping class="br.com.Bins.Produto.ClassificacaoProduto" />
-		<mapping class="br.com.Bins.Produto.LocalizacaoProduto" />
+		<mapping class="br.com.Bin.Produto.Produto" />
+		<mapping class="br.com.Bin.Produto.ClassificacaoProduto" />
+		<mapping class="br.com.Bin.Produto.LocalizacaoProduto" />
 		<mapping class="br.com.Bin.Cargo" />
 		<mapping class="br.com.Bin.Telefone" />
 		<mapping class="br.com.Bin.Endereco" />

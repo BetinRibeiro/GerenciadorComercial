@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 import javax.swing.JOptionPane;
 
-import br.com.Bins.Produto.LocalizacaoProduto;
+import br.com.Bin.Produto.LocalizacaoProduto;
 import br.com.Persistence.Banco;
 
 import java.awt.Color;
@@ -33,26 +33,12 @@ public class JFrmCadastroLocalArmazenamento extends JDialog implements ActionLis
 	private JButton btnBuscar;
 	private Banco banco = new Banco();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JFrmCadastroLocalArmazenamento frame = new JFrmCadastroLocalArmazenamento();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
+	 * @param idLocal 
 	 */
-	public JFrmCadastroLocalArmazenamento() {
+	public JFrmCadastroLocalArmazenamento(Integer idLocal) {
 		setTitle("Cadastro do Local do Armazenamento do Prouto");
 		setType(Type.UTILITY);
 		// setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
@@ -133,6 +119,10 @@ public class JFrmCadastroLocalArmazenamento extends JDialog implements ActionLis
 		btnDeletar.addActionListener(this);
 		btnSair.addActionListener(this);
 		btnSalvar.addActionListener(this);
+		if (idLocal!=0) {
+			txtCodigoBusca.setText(String.valueOf(idLocal));
+			buscar();
+		}
 	}
 
 	@Override
@@ -166,11 +156,11 @@ public class JFrmCadastroLocalArmazenamento extends JDialog implements ActionLis
 
 	private void deletar() {
 		setVisible(false);
-		int a = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja deletar?");
+		int a = JOptionPane.showConfirmDialog(contentPane, "Tem certeza que deseja deletar?");
 		System.out.println(a);
 		LocalizacaoProduto c = (LocalizacaoProduto) banco .buscarPorId(LocalizacaoProduto.class, Integer.parseInt(txtCodigo.getText()));
 		if (a==0) {
-			JOptionPane.showMessageDialog(null, "classeficação "+c.getDescricao()+" foi deletada com sucesso!");
+			JOptionPane.showMessageDialog(contentPane, "classeficação "+c.getDescricao()+" foi deletada com sucesso!");
 			banco.deletarObjeto(c);
 			apagar();
 			btnDeletar.setEnabled(false);
@@ -184,7 +174,7 @@ public class JFrmCadastroLocalArmazenamento extends JDialog implements ActionLis
 		txtDescricao.setText("");
 		txtObsLocal.setText("");
 		setVisible(false);
-		JOptionPane.showMessageDialog(null,
+		JOptionPane.showMessageDialog(contentPane,
 				"Pode salvar um local de armazenamento novo agora!");
 		setVisible(true);
 		btnDeletar.setEnabled(false);
@@ -201,12 +191,12 @@ public class JFrmCadastroLocalArmazenamento extends JDialog implements ActionLis
 			btnDeletar.setEnabled(true);
 		}if (c==null) {
 			setVisible(false);
-			JOptionPane.showMessageDialog(null, "Código Inexistente!");
+			JOptionPane.showMessageDialog(contentPane, "Código Inexistente!");
 			setVisible(true);
 		}
 		} catch (Exception e) {
 			setVisible(false);
-			JOptionPane.showMessageDialog(null, "Preencha codigo valido para buscar " );
+			JOptionPane.showMessageDialog(contentPane, "Preencha codigo valido para buscar " );
 			setVisible(true);
 		}
 	}
@@ -220,7 +210,7 @@ public class JFrmCadastroLocalArmazenamento extends JDialog implements ActionLis
 					&& !txtDescricao.getText().equalsIgnoreCase("")) {
 				banco.salvarOuAtualizarObjeto(c);
 				this.setVisible(false);
-				JOptionPane.showMessageDialog(null,
+				JOptionPane.showMessageDialog(contentPane,
 						"Você acabou de criar uma classe \n com a descrição : "
 								+ txtDescricao.getText());
 				dispose();
@@ -232,7 +222,7 @@ public class JFrmCadastroLocalArmazenamento extends JDialog implements ActionLis
 				this.setVisible(false);
 				JOptionPane
 						.showMessageDialog(
-								null,
+								contentPane,
 								"Você acabou de atualizar uma classe \n com a descrição : "
 										+ txtDescricao.getText()
 										+ "\n Agora todos os produtos que tinham a antiga descrição terão essa nova");
@@ -242,13 +232,13 @@ public class JFrmCadastroLocalArmazenamento extends JDialog implements ActionLis
 
 				this.setVisible(false);
 				JOptionPane
-						.showMessageDialog(null,
+						.showMessageDialog(contentPane,
 								"Não deixe campos vazios \n refaça novamente preenchendo todos os compos!");
 				this.setVisible(true);
 			}
 			
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERRO - "+e);
+			JOptionPane.showMessageDialog(contentPane, "ERRO - "+e);
 		}
 	}
 }

@@ -12,9 +12,9 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
-import br.com.Bins.Produto.ClassificacaoProduto;
-import br.com.Bins.Produto.LocalizacaoProduto;
-import br.com.Bins.Produto.Produto;
+import br.com.Bin.Produto.ClassificacaoProduto;
+import br.com.Bin.Produto.LocalizacaoProduto;
+import br.com.Bin.Produto.Produto;
 import br.com.Persistence.Banco;
 
 import java.awt.Color;

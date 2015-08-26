@@ -297,7 +297,7 @@ public class JFrmCadastroContato extends JDialog implements ActionListener {
 		case "Apagar":
 			apagar();
 			setVisible(false);
-			JOptionPane.showMessageDialog(null,
+			JOptionPane.showMessageDialog(contentPane,
 					"Pode salvar um Contato novo agora!");
 
 			setVisible(true);
@@ -314,13 +314,13 @@ public class JFrmCadastroContato extends JDialog implements ActionListener {
 
 	private void deletar() {
 		setVisible(false);
-		int a = JOptionPane.showConfirmDialog(null,
+		int a = JOptionPane.showConfirmDialog(contentPane,
 				"Tem certeza que deseja deletar?");
 		System.out.println(a);
 		Contato c = (Contato) banco.buscarPorId(Contato.class,
 				Integer.parseInt(txtId.getText()));
 		if (a == 0) {
-			JOptionPane.showMessageDialog(null, "Contato " + c.getNome()
+			JOptionPane.showMessageDialog(contentPane, "Contato " + c.getNome()
 					+ " foi deletado com sucesso!");
 			banco.deletarObjeto(c);
 			apagar();
@@ -383,12 +383,12 @@ public class JFrmCadastroContato extends JDialog implements ActionListener {
 			}
 			if (c == null) {
 				setVisible(false);
-				JOptionPane.showMessageDialog(null, "Código Inexistente!");
+				JOptionPane.showMessageDialog(contentPane, "Código Inexistente!");
 				setVisible(true);
 			}
 		} catch (Exception e) {
 			setVisible(false);
-			JOptionPane.showMessageDialog(null,
+			JOptionPane.showMessageDialog(contentPane,
 					"Preencha codigo valido para buscar ");
 			setVisible(true);
 		}
@@ -435,9 +435,9 @@ public class JFrmCadastroContato extends JDialog implements ActionListener {
 			f.setId(Integer.valueOf(txtId.getText()));
 			banco.salvarOuAtualizarObjeto(f);
 			setVisible(false);
-			JOptionPane.showMessageDialog(null,
+			JOptionPane.showMessageDialog(contentPane,
 					"Produto salvo com sucesso!");
-			JOptionPane.showMessageDialog(null, "tem um id "+String.valueOf(f.getId()));
+			JOptionPane.showMessageDialog(contentPane, "tem um id "+String.valueOf(f.getId()));
 			setVisible(true);
 			txtId.setText(String.valueOf(f.getId()));
 			apagar();
@@ -446,9 +446,9 @@ public class JFrmCadastroContato extends JDialog implements ActionListener {
 			
 			banco.salvarOuAtualizarObjeto(f);
 			setVisible(false);
-			JOptionPane.showMessageDialog(null,
+			JOptionPane.showMessageDialog(contentPane,
 					"Produto salvo com sucesso!");
-			JOptionPane.showMessageDialog(null, "não tem um id");
+			JOptionPane.showMessageDialog(contentPane, "não tem um id");
 			setVisible(true);
 			apagar();
 		}
