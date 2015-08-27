@@ -105,7 +105,7 @@ public class JFrmCadastroClassificacaoProduto extends JDialog implements
 		lblPesquisarNM.setBounds(10, 10, 128, 20);
 		contentPane.add(lblPesquisarNM);
 
-		txtPesquisaNome = new JTextField("Código para pesquisar");
+		txtPesquisaNome = new JTextField("");
 		txtPesquisaNome.setBounds(122, 10, 145, 20);
 		contentPane.add(txtPesquisaNome);
 		txtPesquisaNome.setColumns(10);
@@ -190,14 +190,10 @@ public class JFrmCadastroClassificacaoProduto extends JDialog implements
 			txtDescricao.setText(c.getDescricao());
 			btnDeletar.setEnabled(true);
 		}if (c==null) {
-			setVisible(false);
 			JOptionPane.showMessageDialog(contentPane, "Código Inexistente!");
-			setVisible(true);
 		}
 		} catch (Exception e) {
-			setVisible(false);
 			JOptionPane.showMessageDialog(contentPane, "Preencha codigo valido para buscar " );
-			setVisible(true);
 		}
 	}
 
@@ -209,7 +205,6 @@ public class JFrmCadastroClassificacaoProduto extends JDialog implements
 			if (txtCodigo.getText().equalsIgnoreCase("")
 					&& !txtDescricao.getText().equalsIgnoreCase("")) {
 				banco.salvarOuAtualizarObjeto(c);
-				this.setVisible(false);
 				JOptionPane.showMessageDialog(contentPane,
 						"Você acabou de criar uma classe \n com a descrição : "
 								+ txtDescricao.getText());
@@ -219,7 +214,6 @@ public class JFrmCadastroClassificacaoProduto extends JDialog implements
 					&& !txtDescricao.getText().equalsIgnoreCase("")) {
 				c.setId(Integer.parseInt(txtCodigo.getText()));
 				banco.salvarOuAtualizarObjeto(c);
-				this.setVisible(false);
 				JOptionPane
 						.showMessageDialog(
 								contentPane,
@@ -230,11 +224,9 @@ public class JFrmCadastroClassificacaoProduto extends JDialog implements
 			}
 			if (txtDescricao.getText().equalsIgnoreCase("")) {
 
-				this.setVisible(false);
 				JOptionPane
 						.showMessageDialog(contentPane,
 								"Não deixe campos vazios \n refaça novamente preenchendo todos os compos!");
-				this.setVisible(true);
 			}
 			
 		} catch (Exception e) {

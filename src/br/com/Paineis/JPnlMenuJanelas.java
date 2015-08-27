@@ -21,6 +21,7 @@ import br.com.Janela.Cadastro.JFrmCadastroLocalArmazenamento;
 import br.com.Janela.Cadastro.JFrmCadastroProduto;
 import br.com.Janela.Consulta.*;
 import br.com.Janela.Movimentacao.JFrmCompraProduto;
+import java.awt.SystemColor;
 
 @SuppressWarnings("serial")
 public class JPnlMenuJanelas extends JPanel implements ActionListener {
@@ -46,8 +47,43 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		 
 		menuBar.add(mnArquivo);
 		
+		JMenu mntmNewMenuItem_1 = new JMenu("Empresa");
+		mnArquivo.add(mntmNewMenuItem_1);
+		
+		JMenuItem mntmCadastrarSetor = new JMenuItem("Cadastrar Setor");
+		mntmNewMenuItem_1.add(mntmCadastrarSetor);
+		
+		JMenuItem mntmCadastrarCargo = new JMenuItem("Cadastrar Cargo");
+		mntmNewMenuItem_1.add(mntmCadastrarCargo);
+		mntmCadastrarCargo.addActionListener(this);
+		
+		JMenuItem mntmConsultarSetor = new JMenuItem("Consultar Setor");
+		mntmNewMenuItem_1.add(mntmConsultarSetor);
+		
+		JMenuItem mntmConsultarCargo = new JMenuItem("Consultar Cargo");
+		mntmNewMenuItem_1.add(mntmConsultarCargo);
+		
+		JMenu mnServios_1 = new JMenu("Servi\u00E7os");
+		mnArquivo.add(mnServios_1);
+		
+		JMenu mnContratos = new JMenu("Contratos");
+		mnArquivo.add(mnContratos);
+		
+		JMenu mnServios = new JMenu("Servi\u00E7os");
+		mnArquivo.add(mnServios);
+		
+		JMenu mnImveis = new JMenu("Im\u00F3veis");
+		mnArquivo.add(mnImveis);
+		
+		JMenuItem mnSair = new JMenuItem("Sair");
+		mnArquivo.add(mnSair);
+		
+		JMenu mnCadatro = new JMenu("Cadatro");
+		menuBar.add(mnCadatro);
+		
 		JMenu mnProdutos = new JMenu("Produtos");
-		mnArquivo.add(mnProdutos);
+		mnCadatro.add(mnProdutos);
+		mnProdutos.setForeground(SystemColor.textHighlight);
 		
 		JMenuItem mntmCadastrarProduto = new JMenuItem("Cadastrar Produto");
 		mnProdutos.add(mntmCadastrarProduto);
@@ -72,7 +108,8 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		mnProdutos.add(mntmConsultarLocalDe);
 		
 		JMenu mntmNewMenuItem_3 = new JMenu("Funcionarios/Colaboradores");
-		mnArquivo.add(mntmNewMenuItem_3);
+		mntmNewMenuItem_3.setForeground(SystemColor.textHighlight);
+		mnCadatro.add(mntmNewMenuItem_3);
 		
 		JMenuItem mntmCadastrarFuncionario = new JMenuItem("Cadastrar Funcionario");
 		mntmNewMenuItem_3.add(mntmCadastrarFuncionario);
@@ -80,36 +117,21 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		
 		JMenuItem mntmConsultarFuncionario = new JMenuItem("Consultar Funcionario");
 		mntmNewMenuItem_3.add(mntmConsultarFuncionario);
-		mntmConsultarFuncionario.addActionListener(this);
-		
-		JMenu mntmNewMenuItem_1 = new JMenu("Empresa");
-		mnArquivo.add(mntmNewMenuItem_1);
-		
-		JMenuItem mntmCadastrarSetor = new JMenuItem("Cadastrar Setor");
-		mntmNewMenuItem_1.add(mntmCadastrarSetor);
-		
-		JMenuItem mntmCadastrarCargo = new JMenuItem("Cadastrar Cargo");
-		mntmNewMenuItem_1.add(mntmCadastrarCargo);
-		mntmCadastrarCargo.addActionListener(this);
-		
-		JMenuItem mntmConsultarSetor = new JMenuItem("Consultar Setor");
-		mntmNewMenuItem_1.add(mntmConsultarSetor);
-		
-		JMenuItem mntmConsultarCargo = new JMenuItem("Consultar Cargo");
-		mntmNewMenuItem_1.add(mntmConsultarCargo);
 		
 		JMenu mntmNewMenuItem = new JMenu("Clientes");
-		mnArquivo.add(mntmNewMenuItem);
+		mntmNewMenuItem.setForeground(SystemColor.textHighlight);
+		mnCadatro.add(mntmNewMenuItem);
 		
 		mntmCadastroDeCliente = new JMenuItem("Cadastro de Cliente");
 		mntmNewMenuItem.add(mntmCadastroDeCliente);
 		
 		JMenuItem mntmConsultarCliente = new JMenuItem("Consultar Cliente");
 		mntmNewMenuItem.add(mntmConsultarCliente);
-		mntmCadastroDeCliente.addActionListener(this);
+		mntmConsultarCliente.addActionListener(this);
 		
 		JMenu mnNewMenu = new JMenu("Fornecedores");
-		mnArquivo.add(mnNewMenu);
+		mnNewMenu.setForeground(SystemColor.textHighlight);
+		mnCadatro.add(mnNewMenu);
 		
 		mntmCadastrarFornecedor = new JMenuItem("Cadastrar Fornecedor");
 		mnNewMenu.add(mntmCadastrarFornecedor);
@@ -118,21 +140,11 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		mntmCadastrarContato = new JMenuItem("Cadastrar Contato");
 		mnNewMenu.add(mntmCadastrarContato);
 		mntmCadastrarContato.addActionListener(this);
+		mntmCadastroDeCliente.addActionListener(this);
+		mntmConsultarFuncionario.addActionListener(this);
 		
-		JMenu mnServios_1 = new JMenu("Servi\u00E7os");
-		mnArquivo.add(mnServios_1);
-		
-		JMenu mnContratos = new JMenu("Contratos");
-		mnArquivo.add(mnContratos);
-		
-		JMenu mnServios = new JMenu("Servi\u00E7os");
-		mnArquivo.add(mnServios);
-		
-		JMenu mnImveis = new JMenu("Im\u00F3veis");
-		mnArquivo.add(mnImveis);
-		
-		JMenuItem mnSair = new JMenuItem("Sair");
-		mnArquivo.add(mnSair);
+		mntmConsultarClassificaoDe.addActionListener(this);
+		mntmConsultarLocalDe.addActionListener(this);
 		
 		JMenu mnMovimentao = new JMenu("Movimenta\u00E7\u00E3o");
 		menuBar.add(mnMovimentao);
@@ -189,9 +201,6 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 		
 		JMenuItem mntmHelp = new JMenuItem("Help");
 		mnAjuda.add(mntmHelp);
-		
-		mntmConsultarClassificaoDe.addActionListener(this);
-		mntmConsultarLocalDe.addActionListener(this);
 	}
 
 	@Override
@@ -226,7 +235,7 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 				ar.setVisible(true);
 			break;
 			case"Cadastro de Cliente":
-				JFrmCadastroCliente ccl = new JFrmCadastroCliente();
+				JFrmCadastroCliente ccl = new JFrmCadastroCliente(0);
 				ccl.setVisible(true);
 			break;
 			case"Cadastrar Fornecedor":
@@ -258,6 +267,10 @@ public class JPnlMenuJanelas extends JPanel implements ActionListener {
 			case"Consultar Funcionario":
 				JFrmConsultaFuncionario a7 = new JFrmConsultaFuncionario();
 				a7.setVisible(true);
+			break;
+			case"Consultar Cliente":
+				JFrmConsultaCliente a8 = new JFrmConsultaCliente();
+				a8.setVisible(true);
 			break;
 			
 			

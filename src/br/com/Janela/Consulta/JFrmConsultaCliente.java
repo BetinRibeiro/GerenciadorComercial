@@ -17,10 +17,10 @@ import javax.swing.ListSelectionModel;
 
 import br.com.Persistence.Banco;
 import br.com.TableModel.*;
-import br.com.Bin.Funcionario.*;
+import br.com.Bin.Cliente.*;
 import br.com.Janela.Cadastro.*;
 
-public class JFrmConsultaFuncionario extends JDialog implements
+public class JFrmConsultaCliente extends JDialog implements
 		ActionListener {
 
 	private JPanel contentPane;
@@ -29,16 +29,16 @@ public class JFrmConsultaFuncionario extends JDialog implements
 	private JButton btnSair;
 	private JButton btnAlterar;
 	private Banco banco = new Banco();
-	private TMFuncionario modelProd = new TMFuncionario();
+	private TMCliente modelProd = new TMCliente();
 	private int a;
-	private JTable tableFuncionarios;
+	private JTable tableClientes;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			JFrmConsultaFuncionario dialog = new JFrmConsultaFuncionario();
+			JFrmConsultaCliente dialog = new JFrmConsultaCliente();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -49,8 +49,8 @@ public class JFrmConsultaFuncionario extends JDialog implements
 	/**
 	 * Create the dialog.
 	 */
-	public JFrmConsultaFuncionario() {
-		setTitle("Consulta de Funcinarios");
+	public JFrmConsultaCliente() {
+		setTitle("Consulta de Clientes");
 		setType(Type.UTILITY);
 		// setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 427);
@@ -68,25 +68,25 @@ public class JFrmConsultaFuncionario extends JDialog implements
 		scrollPane.setBounds(0, 0, 574, 300);
 		panel.add(scrollPane);
 
-		tableFuncionarios = new JTable(modelProd);
+		tableClientes = new JTable(modelProd);
 
 		// tabela com colunas fixasv
-		tableFuncionarios.getTableHeader().setReorderingAllowed(false);
+		tableClientes.getTableHeader().setReorderingAllowed(false);
 		// tamanho especifico da coluna
-		tableFuncionarios.getColumn("Nome")
+		tableClientes.getColumn("Nome")
 				.setPreferredWidth(150);
 
 		// seleciona apenas uma linha
-		tableFuncionarios
+		tableClientes
 				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(tableFuncionarios);
+		scrollPane.setViewportView(tableClientes);
 
 		txtNomeBusca = new JTextField();
 		txtNomeBusca.setBounds(143, 10, 260, 20);
 		contentPane.add(txtNomeBusca);
 		txtNomeBusca.setColumns(10);
 
-		JLabel lblNome = new JLabel("Nome Funcionario");
+		JLabel lblNome = new JLabel("Nome Cliente");
 		lblNome.setBounds(10, 10, 123, 20);
 		contentPane.add(lblNome);
 
@@ -144,9 +144,9 @@ public class JFrmConsultaFuncionario extends JDialog implements
 
 	private void altearar() {
 		try {
-			JFrmCadastroFuncionario c = new JFrmCadastroFuncionario(
-					(Integer) tableFuncionarios.getValueAt(
-							tableFuncionarios.getSelectedRow(), 0));
+			JFrmCadastroCliente c = new JFrmCadastroCliente(
+					(Integer) tableClientes.getValueAt(
+							tableClientes.getSelectedRow(), 0));
 			txtNomeBusca.setText("");
 			modelProd.removeTudo();
 			c.setVisible(true);
@@ -160,10 +160,10 @@ public class JFrmConsultaFuncionario extends JDialog implements
 		try {
 			modelProd.removeTudo();
 			a = 0;
-			List<?> lista = banco.BuscaNome(Funcionario.class,
+			List<?> lista = banco.BuscaNome(Cliente.class,
 					txtNomeBusca.getText(), "nome");
 			for (int i = 0; i < lista.size(); i++) {
-				Funcionario classif = (Funcionario) lista
+				Cliente classif = (Cliente) lista
 						.get(i);
 				modelProd.addRow(classif);
 				a = 1;

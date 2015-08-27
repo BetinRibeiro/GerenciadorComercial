@@ -53,7 +53,7 @@ public class JFrmConsultaProduto extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public JFrmConsultaProduto() {
-		setTitle("Cadastro de Cargo dos Funcinarios");
+		setTitle("Consulta dos Produtos");
 		setType(Type.UTILITY);
 		// setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 427);

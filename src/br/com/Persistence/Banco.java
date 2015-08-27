@@ -136,7 +136,7 @@ public class Banco {
 			  if (nomeBuscar == null || nomeBuscar.trim().equals(""))  
 			       return  sessao.createCriteria(classe).addOrder(
 							Order.asc(coluna)).list();
-			   return sessao.createCriteria(classe).add(Restrictions.like("descricao", nomeBuscar, MatchMode.ANYWHERE)).list();
+			   return sessao.createCriteria(classe).add(Restrictions.ilike("descricao", nomeBuscar, MatchMode.ANYWHERE)).list();
 					   //(List<?>) this.sessao.createCriteria(classe).add(Restrictions.like(coluna, "%"+nomeBuscar+"%")).list();  
 			    } catch (Exception e) {
 			    	 System.out.println(e);

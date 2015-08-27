@@ -67,11 +67,10 @@ public class JFrmCadastroFuncionario extends JDialog implements ActionListener {
 	private JLabel lblEmail;
 	private JTextField txtEmail;
 
-
-
 	/**
 	 * Create the frame.
-	 * @param idFuncionario 
+	 * 
+	 * @param idFuncionario
 	 */
 	public JFrmCadastroFuncionario(int idFuncionario) {
 		setTitle("Cadastro de Funcionarios");
@@ -259,24 +258,24 @@ public class JFrmCadastroFuncionario extends JDialog implements ActionListener {
 		txtCel.setColumns(10);
 		txtCel.setBounds(170, 126, 150, 20);
 		panel_2.add(txtCel);
-		
+
 		txtCep = new JTextField();
 		txtCep.setText("");
 		txtCep.setColumns(10);
 		txtCep.setBounds(270, 75, 150, 20);
 		panel_2.add(txtCep);
-		
+
 		JLabel lblCep = new JLabel("CEP");
 		lblCep.setBounds(270, 55, 82, 14);
 		panel_2.add(lblCep);
-		
+
 		JLabel lblUf = new JLabel("UF");
 		lblUf.setBounds(434, 55, 46, 14);
 		panel_2.add(lblUf);
-		String[] uf = { "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES",
-				"GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR",
-				"RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO" };
-		
+		String[] uf = { "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO",
+				"MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ",
+				"RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO" };
+
 		boxUf = new JComboBox(uf);
 		boxUf.setBounds(434, 75, 71, 20);
 		panel_2.add(boxUf);
@@ -296,11 +295,11 @@ public class JFrmCadastroFuncionario extends JDialog implements ActionListener {
 		btnSair = new JButton("Sair");
 		btnSair.setBounds(517, 449, 89, 20);
 		panel.add(btnSair);
-		
+
 		lblEmail = new JLabel("Email");
 		lblEmail.setBounds(10, 233, 60, 20);
 		panel.add(lblEmail);
-		
+
 		txtEmail = new JTextField();
 		txtEmail.setText("");
 		txtEmail.setColumns(10);
@@ -315,14 +314,14 @@ public class JFrmCadastroFuncionario extends JDialog implements ActionListener {
 		btnDeletar.addActionListener(this);
 		btnSair.addActionListener(this);
 		btnSalvar.addActionListener(this);
+		boxEscola.setSelectedIndex(3);
 
 		apagar();
-		if (idFuncionario!=0) {
+		if (idFuncionario != 0) {
 			txtCodPesq.setText(String.valueOf(idFuncionario));
 			buscar();
 		}
 
-		// TODO - colocar "" em todas as caixas de txt para não dar problemas
 	}
 
 	private String[] listarCargos() {
@@ -356,11 +355,6 @@ public class JFrmCadastroFuncionario extends JDialog implements ActionListener {
 			break;
 		case "Apagar":
 			apagar();
-			setVisible(false);
-			JOptionPane.showMessageDialog(contentPane,
-					"Pode salvar um Funcionario novo agora!");
-
-			setVisible(true);
 			break;
 		case "Sair":
 			dispose();
@@ -373,20 +367,25 @@ public class JFrmCadastroFuncionario extends JDialog implements ActionListener {
 	}
 
 	private void deletar() {
-		setVisible(false);
-		int a = JOptionPane.showConfirmDialog(contentPane,
-				"Tem certeza que deseja deletar?");
-		System.out.println(a);
-		Funcionario c = (Funcionario) banco.buscarPorId(Funcionario.class,
-				Integer.parseInt(txtId.getText()));
-		if (a == 0) {
-			JOptionPane.showMessageDialog(contentPane, "Funcionario " + c.getNome()
-					+ " foi deletado com sucesso!");
-			banco.deletarObjeto(c);
-			apagar();
-			btnDeletar.setEnabled(false);
+		try {
+			setVisible(false);
+			int a = JOptionPane.showConfirmDialog(contentPane,
+					"Tem certeza que deseja deletar?");
+			System.out.println(a);
+			Funcionario c = (Funcionario) banco.buscarPorId(Funcionario.class,
+					Integer.parseInt(txtId.getText()));
+			if (a == 0) {
+				JOptionPane.showMessageDialog(contentPane,
+						"Funcionario " + c.getNome()
+								+ " foi deletado com sucesso!");
+				banco.deletarObjeto(c);
+				apagar();
+				btnDeletar.setEnabled(false);
+			}
+			setVisible(true);
+		} catch (Exception e) {
+			System.out.println("Selecione um item primeiro para poder excluir");
 		}
-		setVisible(true);
 	}
 
 	private void apagar() {
@@ -404,11 +403,11 @@ public class JFrmCadastroFuncionario extends JDialog implements ActionListener {
 			txtEmail.setText("");
 			txtRg.setText("");
 			txtSobrenome.setText("");
-			txtValorSalario.setText("");
+			txtValorSalario.setText("788.68");
 			jdc.setDate(new java.util.Date());
 			txtCep.setText("");
 			boxCargo.setSelectedIndex(0);
-			boxEscola.setSelectedIndex(0);
+			boxEscola.setSelectedIndex(3);
 			boxEstadoCivil.setSelectedIndex(0);
 			boxUf.setSelectedIndex(0);
 
@@ -466,7 +465,8 @@ public class JFrmCadastroFuncionario extends JDialog implements ActionListener {
 			}
 			if (c == null) {
 				setVisible(false);
-				JOptionPane.showMessageDialog(contentPane, "Código Inexistente!");
+				JOptionPane.showMessageDialog(contentPane,
+						"Código Inexistente!");
 				setVisible(true);
 			}
 		} catch (Exception e) {
@@ -478,94 +478,64 @@ public class JFrmCadastroFuncionario extends JDialog implements ActionListener {
 	}
 
 	private void salvar() {
-		// try {
+		try {
 
-		confereIntegridadeDosDados();
-		
-		
-		Cargo cargo = (Cargo) banco.buscarPorId(Cargo.class,
-				listaCargo.get(boxCargo.getSelectedIndex()));
-		System.out.println("Cargo " +cargo.getId());
-		
-		
-		Telefone telefones = new Telefone();
-		telefones.setCelular(txtCel.getText());
-		telefones.setTelefone(txtFone1.getText());
-		banco.salvarObjeto(telefones);
-		System.out.println(telefones.getId());
-		System.out.println(telefones.getCelular());
-		System.out.println(telefones.getTelefone());
 
-		Endereco end = new Endereco();
-		end.setBairro(txtBairro.getText());
-		end.setCidade(txtCidade.getText());
-		end.setEnd(txtEnd.getText());
-		end.setCep(txtCep.getText());
-		end.setUf(String.valueOf(boxUf.getSelectedItem()));
-		System.out.println("Bairro "+end.getBairro());
-		System.out.println(end.getCidade());
-		System.out.println(end.getEnd());
-		banco.salvarObjeto(end);
-		
-		Funcionario f = new Funcionario();
+			Cargo cargo = (Cargo) banco.buscarPorId(Cargo.class,
+					listaCargo.get(boxCargo.getSelectedIndex()));
+			System.out.println("Cargo " + cargo.getId());
 
-		f.setCargo(cargo);
-		f.setCpf(txtCpf.getText());
-		f.setDataNasc(Date.valueOf(df.format(jdc.getDate())));
-		f.setEnd(end);
-		f.setEscolaridade(String.valueOf(boxEscola.getSelectedItem()));
-		f.setEstadoCivil(String.valueOf(boxEstadoCivil.getSelectedItem()));
-		f.setFone(telefones);
-		f.setNome(txtNome.getText());
-		f.setRg(txtRg.getText());
-		f.setEmail(txtEmail.getText());
-		f.setSexo(String.valueOf(boxSexo.getSelectedItem()));
-		f.setSobrenome(txtSobrenome.getText());
-		f.setValorSalario(Float.parseFloat(txtValorSalario.getText()));
+			Telefone telefones = new Telefone();
+			telefones.setCelular(txtCel.getText());
+			telefones.setTelefone(txtFone1.getText());
+			banco.salvarObjeto(telefones);
 
-		System.out.println(telefones.getId());
+			Endereco end = new Endereco();
+			end.setBairro(txtBairro.getText());
+			end.setCidade(txtCidade.getText());
+			end.setEnd(txtEnd.getText());
+			end.setCep(txtCep.getText());
+			end.setUf(String.valueOf(boxUf.getSelectedItem()));
+			banco.salvarObjeto(end);
 
-		if (!txtId.getText().equalsIgnoreCase("")) {
-			f.setId(Integer.valueOf(txtId.getText()));
-			banco.salvarOuAtualizarObjeto(f);
-			setVisible(false);
+			Funcionario f = new Funcionario();
+
+			f.setCargo(cargo);
+			f.setCpf(txtCpf.getText());
+			f.setDataNasc(Date.valueOf(df.format(jdc.getDate())));
+			f.setEnd(end);
+			f.setEscolaridade(String.valueOf(boxEscola.getSelectedItem()));
+			f.setEstadoCivil(String.valueOf(boxEstadoCivil.getSelectedItem()));
+			f.setFone(telefones);
+			f.setNome(txtNome.getText());
+			f.setRg(txtRg.getText());
+			f.setEmail(txtEmail.getText());
+			f.setSexo(String.valueOf(boxSexo.getSelectedItem()));
+			f.setSobrenome(txtSobrenome.getText());
+			f.setValorSalario(Float.parseFloat(txtValorSalario.getText()
+					.replace(",", ".")));
+
+			if (!txtId.getText().equalsIgnoreCase("")) {
+				f.setId(Integer.valueOf(txtId.getText()));
+				banco.salvarOuAtualizarObjeto(f);
+				JOptionPane.showMessageDialog(contentPane,
+						"Produto salvo com sucesso!");
+				txtId.setText(String.valueOf(f.getId()));
+				apagar();
+			} else {
+
+				banco.salvarOuAtualizarObjeto(f);
+				setVisible(false);
+				JOptionPane.showMessageDialog(contentPane,
+						"Produto salvo com sucesso!");
+				JOptionPane.showMessageDialog(contentPane, "não tem um id");
+				apagar();
+			}
+		} catch (Exception e) {
 			JOptionPane.showMessageDialog(contentPane,
-					"Produto salvo com sucesso!");
-			JOptionPane.showMessageDialog(contentPane, "tem um id "+String.valueOf(f.getId()));
-			setVisible(true);
-			txtId.setText(String.valueOf(f.getId()));
-			apagar();
+					"Erro ao salvar, verifique a integridade dos dados.");
 		}
-		else {
-			
-			banco.salvarOuAtualizarObjeto(f);
-			setVisible(false);
-			JOptionPane.showMessageDialog(contentPane,
-					"Produto salvo com sucesso!");
-			JOptionPane.showMessageDialog(contentPane, "não tem um id");
-			setVisible(true);
-			apagar();
-		}
-		System.out.println("---"+end.getId());
-		System.out.println("---"+telefones.getId());
-		System.out.println("--"+f.getCpf());
-		System.out.println(f.getEscolaridade());
-		System.out.println(f.getEstadoCivil());
-		System.out.println(f.getNome());
-		System.out.println(f.getRg());
-		System.out.println(f.getSexo());
-		System.out.println("--"+boxSexo.getSelectedItem());
-		System.out.println(f.getSobrenome());
-		System.out.println(f.getValorSalario());
-		System.out.println(f.getDataNasc());
-		
-		
-		
 
 	}
 
-	private void confereIntegridadeDosDados() {
-		// TODO Auto-generated method stub
-
-	}
 }

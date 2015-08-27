@@ -66,7 +66,7 @@ public class JFrmCadastroCliente extends JDialog implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFrmCadastroCliente frame = new JFrmCadastroCliente();
+					JFrmCadastroCliente frame = new JFrmCadastroCliente(0);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -77,8 +77,9 @@ public class JFrmCadastroCliente extends JDialog implements ActionListener {
 
 	/**
 	 * Create the frame.
+	 * @param idClientePassado 
 	 */
-	public JFrmCadastroCliente() {
+	public JFrmCadastroCliente(Integer idClientePassado) {
 		setTitle("Cadastro de Clientes");
 		// setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 		setBounds(100, 100, 640, 520);
@@ -298,6 +299,10 @@ public class JFrmCadastroCliente extends JDialog implements ActionListener {
 		btnSalvar.addActionListener(this);
 
 		apagar();
+		if (idClientePassado != 0) {
+			txtCodPesq.setText(String.valueOf(idClientePassado));
+			buscar();
+		}
 
 	}
 
@@ -483,7 +488,6 @@ public class JFrmCadastroCliente extends JDialog implements ActionListener {
 			setVisible(false);
 			JOptionPane.showMessageDialog(contentPane,
 					"Produto salvo com sucesso!");
-			JOptionPane.showMessageDialog(contentPane, "tem um id "+String.valueOf(f.getId()));
 			setVisible(true);
 			txtId.setText(String.valueOf(f.getId()));
 			apagar();
@@ -498,16 +502,6 @@ public class JFrmCadastroCliente extends JDialog implements ActionListener {
 			setVisible(true);
 			apagar();
 		}
-		System.out.println("---"+end.getId());
-		System.out.println("---"+telefones.getId());
-		System.out.println("--"+f.getCpf());
-		System.out.println(f.getEstadoCivil());
-		System.out.println(f.getNome());
-		System.out.println(f.getRg());
-		System.out.println(f.getSexo());
-		System.out.println("--"+boxSexo.getSelectedItem());
-		System.out.println(f.getSobrenome());
-		System.out.println(f.getDataNasc());
 		
 		
 		

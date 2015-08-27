@@ -169,6 +169,7 @@ public class JFrmCadastroProduto extends JDialog implements ActionListener {
 			txtCodPesqu.setText(String.valueOf(idProdParaAlterar));
 			buscar();
 		}
+		btnDeletar.setEnabled(false);
 	}
 
 	private String[] listaClass() {
@@ -230,6 +231,9 @@ public class JFrmCadastroProduto extends JDialog implements ActionListener {
 	}
 
 	private void deletar() {
+		try {
+			
+		
 		int a = JOptionPane.showConfirmDialog(contentPane,
 				"Tem certeza que deseja deletar?");
 		System.out.println(a);
@@ -243,6 +247,9 @@ public class JFrmCadastroProduto extends JDialog implements ActionListener {
 			apagar();
 			btnDeletar.setEnabled(false);
 		}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(contentPane, "Preencha codigo valido para buscar " );
+		}
 	}
 
 	private void apagar() {
@@ -250,9 +257,7 @@ public class JFrmCadastroProduto extends JDialog implements ActionListener {
 		txtCodPesqu.setText("");
 		txtDescr.setText("");
 		txtEstMin.setText("");
-		txtPrec.setText("");
-		JOptionPane.showMessageDialog(contentPane,
-				"Pode salvar um produto novo agora!");
+		txtPrec.setText("0.00");
 
 		btnDeletar.setEnabled(false);
 	}

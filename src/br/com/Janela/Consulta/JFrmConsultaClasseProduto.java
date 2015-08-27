@@ -50,7 +50,7 @@ public class JFrmConsultaClasseProduto extends JDialog implements
 	 * Create the dialog.
 	 */
 	public JFrmConsultaClasseProduto() {
-		setTitle("Cadastro de Cargo dos Funcinarios");
+		setTitle("Consulta de Classifica\u00E7\u00E3o dos Produtos");
 		setType(Type.UTILITY);
 		// setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 427);
@@ -86,7 +86,7 @@ public class JFrmConsultaClasseProduto extends JDialog implements
 		contentPane.add(txtNomeBusca);
 		txtNomeBusca.setColumns(10);
 
-		JLabel lblNome = new JLabel("Nome ClassificacaoProduto");
+		JLabel lblNome = new JLabel("Nome Classe");
 		lblNome.setBounds(10, 10, 97, 20);
 		contentPane.add(lblNome);
 
