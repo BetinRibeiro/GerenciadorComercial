@@ -28,10 +28,10 @@ import javax.swing.JComboBox;
 
 import com.toedter.calendar.JDateChooser;
 
-import br.com.Bin.Cargo;
+import br.com.Bin.Fornecedor.*;
 import br.com.Bin.Endereco;
 import br.com.Bin.Telefone;
-import br.com.Bin.Fornecedor.Fornecedor;
+import br.com.Bin.Funcionario.*;
 import br.com.Persistence.Banco;
 
 public class JFrmCadastroFornecedor extends JDialog implements ActionListener {
@@ -68,7 +68,7 @@ public class JFrmCadastroFornecedor extends JDialog implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFrmCadastroFornecedor frame = new JFrmCadastroFornecedor();
+					JFrmCadastroFornecedor frame = new JFrmCadastroFornecedor(0);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -79,8 +79,9 @@ public class JFrmCadastroFornecedor extends JDialog implements ActionListener {
 
 	/**
 	 * Create the frame.
+	 * @param idFOrneced 
 	 */
-	public JFrmCadastroFornecedor() {
+	public JFrmCadastroFornecedor(Integer idFOrneced) {
 		setTitle("Cadastro de Fornecedors");
 		// setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 		setBounds(100, 100, 640, 473);
@@ -278,6 +279,10 @@ public class JFrmCadastroFornecedor extends JDialog implements ActionListener {
 		btnSalvar.addActionListener(this);
 
 		apagar();
+		if (idFOrneced != 0) {
+			txtCodPesq.setText(String.valueOf(idFOrneced));
+			buscar();
+		}
 
 	}
 

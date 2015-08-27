@@ -24,7 +24,7 @@ import javax.swing.JComboBox;
 
 import com.toedter.calendar.JDateChooser;
 
-import br.com.Bin.Cargo;
+import br.com.Bin.Funcionario.*;
 import br.com.Bin.Endereco;
 import br.com.Bin.Telefone;
 import br.com.Bin.Cliente.Cliente;

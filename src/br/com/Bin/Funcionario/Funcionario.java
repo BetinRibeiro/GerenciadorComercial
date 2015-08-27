@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import br.com.Bin.Cargo;
 import br.com.Bin.Pessoa.Pessoa;
 import br.com.Persistence.Banco;
 

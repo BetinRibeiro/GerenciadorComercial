@@ -7,5 +7,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernete"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/postg"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/tooto"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Jcalendar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JfreChart"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Jtatto"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/postgre"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

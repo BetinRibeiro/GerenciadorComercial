@@ -17,10 +17,10 @@ import javax.swing.ListSelectionModel;
 
 import br.com.Persistence.Banco;
 import br.com.TableModel.*;
-import br.com.Bin.Cliente.*;
+import br.com.Bin.Fornecedor.*;
 import br.com.Janela.Cadastro.*;
 
-public class JFrmConsultaCliente extends JDialog implements
+public class JFrmConsultaContato extends JDialog implements
 		ActionListener {
 
 	private JPanel contentPane;
@@ -29,16 +29,16 @@ public class JFrmConsultaCliente extends JDialog implements
 	private JButton btnSair;
 	private JButton btnAlterar;
 	private Banco banco = new Banco();
-	private TMCliente modelProd = new TMCliente();
+	private TMContato modelProd = new TMContato();
 	private int a;
-	private JTable tableClientes;
+	private JTable tableContatos;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			JFrmConsultaCliente dialog = new JFrmConsultaCliente();
+			JFrmConsultaContato dialog = new JFrmConsultaContato();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -49,8 +49,8 @@ public class JFrmConsultaCliente extends JDialog implements
 	/**
 	 * Create the dialog.
 	 */
-	public JFrmConsultaCliente() {
-		setTitle("Consulta de Clientes");
+	public JFrmConsultaContato() {
+		setTitle("Consulta do Contato dos Fornecedores");
 		setType(Type.UTILITY);
 		// setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 427);
@@ -68,25 +68,25 @@ public class JFrmConsultaCliente extends JDialog implements
 		scrollPane.setBounds(0, 0, 574, 300);
 		panel.add(scrollPane);
 
-		tableClientes = new JTable(modelProd);
+		tableContatos = new JTable(modelProd);
 
 		// tabela com colunas fixasv
-		tableClientes.getTableHeader().setReorderingAllowed(false);
+		tableContatos.getTableHeader().setReorderingAllowed(false);
 		// tamanho especifico da coluna
-		tableClientes.getColumn("Nome")
+		tableContatos.getColumn("Nome")
 				.setPreferredWidth(150);
 
 		// seleciona apenas uma linha
-		tableClientes
+		tableContatos
 				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(tableClientes);
+		scrollPane.setViewportView(tableContatos);
 
 		txtNomeBusca = new JTextField();
 		txtNomeBusca.setBounds(143, 10, 260, 20);
 		contentPane.add(txtNomeBusca);
 		txtNomeBusca.setColumns(10);
 
-		JLabel lblNome = new JLabel("Nome Cliente");
+		JLabel lblNome = new JLabel("Nome do Contato");
 		lblNome.setBounds(10, 10, 123, 20);
 		contentPane.add(lblNome);
 
@@ -117,6 +117,7 @@ public class JFrmConsultaCliente extends JDialog implements
 		System.out.println(acao);
 		switch (acao) {
 		case "Buscar":
+			System.out.println("entrou aqui");
 			buscar();
 			break;
 
@@ -143,9 +144,9 @@ public class JFrmConsultaCliente extends JDialog implements
 
 	private void altearar() {
 		try {
-			JFrmCadastroCliente c = new JFrmCadastroCliente(
-					(Integer) tableClientes.getValueAt(
-							tableClientes.getSelectedRow(), 0));
+			JFrmCadastroContato c = new JFrmCadastroContato(
+					(Integer) tableContatos.getValueAt(
+							tableContatos.getSelectedRow(), 0));
 			txtNomeBusca.setText("");
 			modelProd.removeTudo();
 			c.setVisible(true);
@@ -159,17 +160,17 @@ public class JFrmConsultaCliente extends JDialog implements
 		try {
 			modelProd.removeTudo();
 			a = 0;
-			List<?> lista = banco.BuscaNome(Cliente.class,
+			List<?> lista = banco.BuscaNome(Contato.class,
 					txtNomeBusca.getText(), "nome");
 			for (int i = 0; i < lista.size(); i++) {
-				Cliente classif = (Cliente) lista
+				Contato classif = (Contato) lista
 						.get(i);
 				modelProd.addRow(classif);
 				a = 1;
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(contentPane,
-					"ERRO ao buscar um classificação."+e);
+					"ERRO ao buscar um classificação.");
 		}
 		if (a == 0) {
 			btnAlterar.setEnabled(false);

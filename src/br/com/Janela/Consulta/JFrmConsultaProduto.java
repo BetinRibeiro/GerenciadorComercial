@@ -35,13 +35,14 @@ public class JFrmConsultaProduto extends JDialog implements ActionListener {
 	private Banco banco = new Banco();
 	private TMProdutoMateriala modelProd = new TMProdutoMateriala();
 	private int a;
+	private Produto produto;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			JFrmConsultaProduto dialog = new JFrmConsultaProduto();
+			JFrmConsultaProduto dialog = new JFrmConsultaProduto("");
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -51,8 +52,9 @@ public class JFrmConsultaProduto extends JDialog implements ActionListener {
 
 	/**
 	 * Create the dialog.
+	 * @param Escolher 
 	 */
-	public JFrmConsultaProduto() {
+	public JFrmConsultaProduto(String escolher) {
 		setTitle("Consulta dos Produtos");
 		setType(Type.UTILITY);
 		// setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
@@ -109,6 +111,10 @@ public class JFrmConsultaProduto extends JDialog implements ActionListener {
 		setLocationRelativeTo(null);
 		setAlwaysOnTop(true);
 		btnAlterar.setEnabled(false);
+		if (escolher.equalsIgnoreCase("Escolher")) {
+			btnSair.setText("Escolher");
+			btnAlterar.setVisible(false);
+		}
 	}
 
 	@Override
@@ -130,11 +136,21 @@ public class JFrmConsultaProduto extends JDialog implements ActionListener {
 		case "Consultar":
 			consultar();
 			break;
+		case "Escolher":
+			retorno();
+			break;
 
 		default:
 			break;
 		}
 
+	}
+
+	private void retorno() {
+		setProduto((Produto) banco.buscarPorId(Produto.class, (Integer) tableProdutos.getValueAt(
+					tableProdutos.getSelectedRow(), 0)));
+		getProduto();
+		dispose();
 	}
 
 	private void consultar() {
@@ -173,5 +189,13 @@ public class JFrmConsultaProduto extends JDialog implements ActionListener {
 		}else {
 			btnAlterar.setEnabled(true);
 		}
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 }

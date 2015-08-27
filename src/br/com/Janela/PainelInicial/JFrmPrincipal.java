@@ -34,6 +34,7 @@ import br.com.Paineis.JPnlMenuJanelas;
 import br.com.Paineis.JPnlRodaPe;
 
 import com.jtattoo.plaf.aero.AeroLookAndFeel;
+import com.jtattoo.plaf.smart.SmartLookAndFeel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -80,6 +81,11 @@ public class JFrmPrincipal extends JFrame {
 					// com.jtattoo.plaf.smart.SmartLookAndFeel tons em azul
 					// com.jtattoo.plaf.texture.TextureLookAndFeel banco gelo
 					// com detalhes em preto fosco muito massa
+					Properties props = new Properties();
+					props.put("logoString", "");  
+					SmartLookAndFeel.setCurrentTheme(props);
+					
+					
 					UIManager
 							.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
 					JFrmPrincipal frame = new JFrmPrincipal();

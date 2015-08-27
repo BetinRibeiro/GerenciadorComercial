@@ -14,13 +14,14 @@
 		<mapping class="br.com.Bin.Produto.Produto" />
 		<mapping class="br.com.Bin.Produto.ClassificacaoProduto" />
 		<mapping class="br.com.Bin.Produto.LocalizacaoProduto" />
-		<mapping class="br.com.Bin.Cargo" />
+		<mapping class="br.com.Bin.Funcionario.Cargo" />
 		<mapping class="br.com.Bin.Telefone" />
 		<mapping class="br.com.Bin.Endereco" />
 		<mapping class="br.com.Bin.Funcionario.Funcionario" />
 		<mapping class="br.com.Bin.Cliente.Cliente" />
-		<mapping class="br.com.Bin.Fornecedor.Fornecedor" />
-		<mapping class="br.com.Bin.Contato" />
+		<mapping class="br.com.Bin.Fornecedor.Fornecedor" /> 
+		<mapping class="br.com.Bin.Fornecedor.Contato" />
+		<mapping class="br.com.Bin.Produto.CFOP"/>
 
 	</session-factory>
 </hibernate-configuration>

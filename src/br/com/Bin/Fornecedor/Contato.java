@@ -1,9 +1,8 @@
-package br.com.Bin;
+package br.com.Bin.Fornecedor;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import br.com.Bin.Fornecedor.Fornecedor;
 import br.com.Bin.Pessoa.Pessoa;
 import br.com.Persistence.Banco;
 

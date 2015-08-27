@@ -17,28 +17,29 @@ import javax.swing.ListSelectionModel;
 
 import br.com.Persistence.Banco;
 import br.com.TableModel.*;
-import br.com.Bin.Cliente.*;
+import br.com.Bin.Produto.*;
 import br.com.Janela.Cadastro.*;
 
-public class JFrmConsultaCliente extends JDialog implements
+public class JFrmConsultaCFOP extends JDialog implements
 		ActionListener {
 
 	private JPanel contentPane;
 	private JTextField txtNomeBusca;
+	private JTable tableCFOPFuncionario;
 	private JButton btnBuscar;
 	private JButton btnSair;
 	private JButton btnAlterar;
 	private Banco banco = new Banco();
-	private TMCliente modelProd = new TMCliente();
+	private TMCFOP modelProd = new TMCFOP();
 	private int a;
-	private JTable tableClientes;
+	private CFOP cfop;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			JFrmConsultaCliente dialog = new JFrmConsultaCliente();
+			JFrmConsultaCFOP dialog = new JFrmConsultaCFOP("");
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -49,8 +50,8 @@ public class JFrmConsultaCliente extends JDialog implements
 	/**
 	 * Create the dialog.
 	 */
-	public JFrmConsultaCliente() {
-		setTitle("Consulta de Clientes");
+	public JFrmConsultaCFOP(String escolher) {
+		setTitle("Consulta de Classifica\u00E7\u00E3o dos CFOPs das Movimentações");
 		setType(Type.UTILITY);
 		// setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 427);
@@ -68,37 +69,40 @@ public class JFrmConsultaCliente extends JDialog implements
 		scrollPane.setBounds(0, 0, 574, 300);
 		panel.add(scrollPane);
 
-		tableClientes = new JTable(modelProd);
+		tableCFOPFuncionario = new JTable(modelProd);
 
 		// tabela com colunas fixasv
-		tableClientes.getTableHeader().setReorderingAllowed(false);
+		tableCFOPFuncionario.getTableHeader().setReorderingAllowed(false);
 		// tamanho especifico da coluna
-		tableClientes.getColumn("Nome")
-				.setPreferredWidth(150);
+		tableCFOPFuncionario.getColumn("Descrição")
+				.setPreferredWidth(350);
 
 		// seleciona apenas uma linha
-		tableClientes
+		tableCFOPFuncionario
 				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(tableClientes);
+		scrollPane.setViewportView(tableCFOPFuncionario);
 
 		txtNomeBusca = new JTextField();
-		txtNomeBusca.setBounds(143, 10, 260, 20);
+		txtNomeBusca.setBounds(129, 10, 260, 20);
 		contentPane.add(txtNomeBusca);
 		txtNomeBusca.setColumns(10);
 
-		JLabel lblNome = new JLabel("Nome Cliente");
-		lblNome.setBounds(10, 10, 123, 20);
+		JLabel lblNome = new JLabel("Nome CFOP");
+		lblNome.setBounds(10, 10, 97, 20);
 		contentPane.add(lblNome);
+		
 
 		btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(414, 10, 89, 20);
+		btnBuscar.setBounds(400, 10, 89, 20);
 		contentPane.add(btnBuscar);
 		btnBuscar.addActionListener(this);
 
+		
 		btnSair = new JButton("Sair");
 		btnSair.setBounds(495, 375, 89, 20);
 		contentPane.add(btnSair);
 		btnSair.addActionListener(this);
+		
 
 		btnAlterar = new JButton("Alterar");
 		btnAlterar.setBounds(399, 375, 89, 20);
@@ -108,6 +112,10 @@ public class JFrmConsultaCliente extends JDialog implements
 		setLocationRelativeTo(null);
 		setAlwaysOnTop(true);
 		btnAlterar.setEnabled(false);
+		if (escolher.equalsIgnoreCase("Escolher")) {
+			btnSair.setText("Escolher");
+			btnAlterar.setVisible(false);
+		}
 	}
 
 	@Override
@@ -129,11 +137,24 @@ public class JFrmConsultaCliente extends JDialog implements
 		case "Consultar":
 			consultar();
 			break;
+		case "Escolher":
+			retorno();
+			break;
 
 		default:
 			break;
 		}
 
+	}
+
+
+	private void retorno() {
+		setCfop((CFOP) banco.buscarPorId(CFOP.class, (Integer) tableCFOPFuncionario.getValueAt(
+				tableCFOPFuncionario.getSelectedRow(), 0)));
+		getCfop();
+		dispose();
+		
+		
 	}
 
 	private void consultar() {
@@ -143,15 +164,15 @@ public class JFrmConsultaCliente extends JDialog implements
 
 	private void altearar() {
 		try {
-			JFrmCadastroCliente c = new JFrmCadastroCliente(
-					(Integer) tableClientes.getValueAt(
-							tableClientes.getSelectedRow(), 0));
+			JFrmCadastroCFOP c = new JFrmCadastroCFOP(
+					(Integer) tableCFOPFuncionario.getValueAt(
+							tableCFOPFuncionario.getSelectedRow(), 0));
 			txtNomeBusca.setText("");
 			modelProd.removeTudo();
 			c.setVisible(true);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(contentPane,
-					"ERRO ao alterar um produto.");
+					"ERRO ao alterar um CFOP.");
 		}
 	}
 
@@ -159,22 +180,30 @@ public class JFrmConsultaCliente extends JDialog implements
 		try {
 			modelProd.removeTudo();
 			a = 0;
-			List<?> lista = banco.BuscaNome(Cliente.class,
-					txtNomeBusca.getText(), "nome");
+			List<?> lista = banco.BuscaNome(CFOP.class,
+					txtNomeBusca.getText(), "descricao");
 			for (int i = 0; i < lista.size(); i++) {
-				Cliente classif = (Cliente) lista
+				CFOP classif = (CFOP) lista
 						.get(i);
 				modelProd.addRow(classif);
 				a = 1;
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(contentPane,
-					"ERRO ao buscar um classificação."+e);
+					"ERRO ao buscar um CFOP.");
 		}
 		if (a == 0) {
 			btnAlterar.setEnabled(false);
 		} else {
 			btnAlterar.setEnabled(true);
 		}
+	}
+
+	public CFOP getCfop() {
+		return cfop;
+	}
+
+	public void setCfop(CFOP cfop) {
+		this.cfop = cfop;
 	}
 }

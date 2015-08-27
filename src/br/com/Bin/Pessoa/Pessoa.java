@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
-import br.com.Bin.Cargo;
 import br.com.Bin.Endereco;
 import br.com.Bin.Telefone;
 import br.com.Persistence.Banco;

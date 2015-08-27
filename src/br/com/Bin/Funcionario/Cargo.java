@@ -1,4 +1,4 @@
-package br.com.Bin;
+package br.com.Bin.Funcionario;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

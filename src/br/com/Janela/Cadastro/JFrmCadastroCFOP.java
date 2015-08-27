@@ -20,8 +20,12 @@ import javax.swing.border.LineBorder;
 
 import br.com.Persistence.*;
 import br.com.Bin.Funcionario.*;
+import br.com.Bin.Produto.CFOP;
+import javax.swing.JScrollPane;
+import java.awt.FlowLayout;
+import javax.swing.JTextArea;
 
-public class JFrmCadastroCargo extends JDialog implements ActionListener {
+public class JFrmCadastroCFOP extends JDialog implements ActionListener {
 
 	private JPanel contentPane;
 	private JTextField txtPesquisaNome;
@@ -30,9 +34,12 @@ public class JFrmCadastroCargo extends JDialog implements ActionListener {
 	private JButton btnApagar;
 	private JButton btnDeletar;
 	private JButton btnSalvar;
-	private JTextField txtCodigo;
+	private JTextField txtCodigoInt;
 	private Banco banco = new Banco();
-	private JTextField txtDescricao;
+	private JTextArea txtDescricao;
+	private JTextField txtCodExt;
+	private JScrollPane scrollPane;
+	private JTextArea textArea;
 
 	/**
 	 * Launch the application.
@@ -41,7 +48,7 @@ public class JFrmCadastroCargo extends JDialog implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFrmCadastroCargo frame = new JFrmCadastroCargo(0);
+					JFrmCadastroCFOP frame = new JFrmCadastroCFOP(0);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,13 +59,14 @@ public class JFrmCadastroCargo extends JDialog implements ActionListener {
 
 	/**
 	 * Create the frame.
-	 * @param idCargo 
+	 * 
+	 * @param idCFOP
 	 */
-	public JFrmCadastroCargo(Integer idCargo) {
-		setTitle("Cadastro de Cargo dos Funcinarios");
+	public JFrmCadastroCFOP(Integer idCFOP) {
+		setTitle("Cadastro de CFOP dos Produtos");
 		setType(Type.UTILITY);
 		// setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
-		setBounds(100, 100, 400, 215);
+		setBounds(100, 100, 400, 277);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -69,46 +77,44 @@ public class JFrmCadastroCargo extends JDialog implements ActionListener {
 
 		JPanel panel = new JPanel();
 		panel.setBorder((Border) new LineBorder(new Color(0, 0, 0)));
-		panel.setBounds(10, 40, 374, 140);
+		panel.setBounds(10, 40, 374, 202);
 		contentPane.add(panel);
 		panel.setLayout(null);
+		contentPane.setLayout(null);
 
-		JLabel lblCdigo = new JLabel("C\u00F3digo");
-		lblCdigo.setBounds(10, 10, 60, 20);
+		JLabel lblCdigo = new JLabel("C\u00F3digo interno");
+		lblCdigo.setBounds(10, 10, 120, 20);
 		panel.add(lblCdigo);
 
-		txtCodigo = new JTextField();
-		txtCodigo.setEnabled(false);
-		txtCodigo.setBounds(10, 30, 120, 20);
-		panel.add(txtCodigo);
-		txtCodigo.setColumns(10);
+		txtCodigoInt = new JTextField();
+		txtCodigoInt.setEnabled(false);
+		txtCodigoInt.setBounds(10, 30, 120, 20);
+		panel.add(txtCodigoInt);
+		txtCodigoInt.setColumns(10);
 
 		JLabel lblDescrio = new JLabel("Descri\u00E7\u00E3o");
 		lblDescrio.setBounds(10, 55, 93, 20);
 		panel.add(lblDescrio);
 
-		txtDescricao = new JTextField();
-		txtDescricao.setBounds(10, 75, 355, 20);
-		panel.add(txtDescricao);
-		txtDescricao.setColumns(10);
+		
 
 		btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(10, 105, 80, 20);
+		btnSalvar.setBounds(10, 171, 80, 20);
 		panel.add(btnSalvar);
 
 		btnDeletar = new JButton("Deletar");
-		btnDeletar.setBounds(100, 105, 80, 20);
+		btnDeletar.setBounds(100, 171, 80, 20);
 		panel.add(btnDeletar);
 
 		btnApagar = new JButton("Apagar");
-		btnApagar.setBounds(195, 105, 80, 20);
+		btnApagar.setBounds(195, 171, 80, 20);
 		panel.add(btnApagar);
 
 		btnSair = new JButton("Sair");
-		btnSair.setBounds(285, 105, 80, 20);
+		btnSair.setBounds(285, 171, 80, 20);
 		panel.add(btnSair);
 
-		JLabel lblPesquisarNM = new JLabel("C\u00F3digo do Cargo");
+		JLabel lblPesquisarNM = new JLabel("C\u00F3digo do CFOP");
 		lblPesquisarNM.setBounds(10, 10, 128, 20);
 		contentPane.add(lblPesquisarNM);
 
@@ -127,8 +133,26 @@ public class JFrmCadastroCargo extends JDialog implements ActionListener {
 		btnSair.addActionListener(this);
 		btnSalvar.addActionListener(this);
 		btnDeletar.setEnabled(false);
-		if (idCargo!=0) {
-			txtPesquisaNome.setText(String.valueOf(idCargo));
+
+		JLabel lblCdigoExterno = new JLabel("C\u00F3digo Externo");
+		lblCdigoExterno.setBounds(185, 13, 107, 14);
+		panel.add(lblCdigoExterno);
+
+		txtCodExt = new JTextField();
+		txtCodExt.setColumns(10);
+		txtCodExt.setBounds(184, 30, 120, 20);
+		panel.add(txtCodExt);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 78, 354, 82);
+		panel.add(scrollPane);
+		
+		txtDescricao = new JTextArea();
+		scrollPane.setViewportView(txtDescricao);
+
+
+		if (idCFOP != 0) {
+			txtPesquisaNome.setText(String.valueOf(idCFOP));
 			buscar();
 		}
 	}
@@ -167,8 +191,8 @@ public class JFrmCadastroCargo extends JDialog implements ActionListener {
 		int a = JOptionPane.showConfirmDialog(contentPane,
 				"Tem certeza que deseja deletar?");
 		System.out.println(a);
-		Cargo c = (Cargo) banco.buscarPorId(Cargo.class,
-				Integer.parseInt(txtCodigo.getText()));
+		CFOP c = (CFOP) banco.buscarPorId(CFOP.class,
+				Integer.parseInt(txtCodigoInt.getText()));
 		if (a == 0) {
 			JOptionPane.showMessageDialog(contentPane,
 					"classeficação " + c.getDescricao()
@@ -181,28 +205,32 @@ public class JFrmCadastroCargo extends JDialog implements ActionListener {
 	}
 
 	private void apagar() {
-		txtCodigo.setText("");
+		txtCodigoInt.setText("");
+		txtCodExt.setText("");
 		txtDescricao.setText("");
 		txtPesquisaNome.setText("");
 		setVisible(false);
-		JOptionPane.showMessageDialog(contentPane, "Pode salvar um cargo novo agora!");
+		JOptionPane.showMessageDialog(contentPane,
+				"Pode salvar um CFOP novo agora!");
 		setVisible(true);
 		btnDeletar.setEnabled(false);
 	}
 
 	private void buscar() {
 		try {
-			Cargo c = (Cargo) banco.buscarPorId(Cargo.class,
+			CFOP c = (CFOP) banco.buscarPorId(CFOP.class,
 					Integer.parseInt(txtPesquisaNome.getText()));
 			System.out.println(c);
 			if (c != null) {
-				txtCodigo.setText(String.valueOf(c.getId()));
+				txtCodigoInt.setText(String.valueOf(c.getId()));
 				txtDescricao.setText(c.getDescricao());
+				txtCodExt.setText(String.valueOf(c.getCod()));
 				btnDeletar.setEnabled(true);
 			}
 			if (c == null) {
 				setVisible(false);
-				JOptionPane.showMessageDialog(contentPane, "Código Inexistente!");
+				JOptionPane.showMessageDialog(contentPane,
+						"Código Inexistente!");
 				setVisible(true);
 			}
 		} catch (Exception e) {
@@ -215,42 +243,38 @@ public class JFrmCadastroCargo extends JDialog implements ActionListener {
 
 	private void salvar() {
 		try {
-			Cargo c = new Cargo();
+			CFOP c = new CFOP();
 			c.setDescricao(txtDescricao.getText());
-			if (txtCodigo.getText().equalsIgnoreCase("")
+			c.setCod(Integer.parseInt(txtCodExt.getText()));
+			if (txtCodigoInt.getText().equalsIgnoreCase("")
 					&& !txtDescricao.getText().equalsIgnoreCase("")) {
 				banco.salvarOuAtualizarObjeto(c);
-				this.setVisible(false);
 				JOptionPane.showMessageDialog(contentPane,
-						"Você acabou de criar um cargo \n com a descrição : "
+						"Você acabou de criar um CFOP \n com a descrição : "
 								+ txtDescricao.getText());
 				dispose();
 			}
-			if (!txtCodigo.getText().equalsIgnoreCase("")
+			if (!txtCodigoInt.getText().equalsIgnoreCase("")
 					&& !txtDescricao.getText().equalsIgnoreCase("")) {
-				c.setId(Integer.parseInt(txtCodigo.getText()));
+				c.setId(Integer.parseInt(txtCodigoInt.getText()));
 				banco.salvarOuAtualizarObjeto(c);
-				this.setVisible(false);
 				JOptionPane
 						.showMessageDialog(
 								contentPane,
-								"Você acabou de atualizar um cargo \n com a descrição : "
+								"Você acabou de atualizar um CFOP \n com a descrição : "
 										+ txtDescricao.getText()
-										+ "\n Agora todos os funcionario que tinham a antigo cargo terão essa novo");
+										+ "\n Agora todos os Produtos que tinham a antigo CFOP terão essa novo");
 				dispose();
 			}
 			if (txtDescricao.getText().equalsIgnoreCase("")) {
 
-				this.setVisible(false);
 				JOptionPane
 						.showMessageDialog(contentPane,
 								"Não deixe campos vazios \n refaça novamente preenchendo todos os compos!");
-				this.setVisible(true);
 			}
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(contentPane, "ERRO - " + e);
 		}
 	}
-
 }

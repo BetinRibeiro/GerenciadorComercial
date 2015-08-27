@@ -22,9 +22,11 @@ import java.util.List;
 import javax.swing.JComboBox;
 
 
+
+
 import br.com.Bin.Endereco;
 import br.com.Bin.Telefone;
-import br.com.Bin.Contato;
+import br.com.Bin.Fornecedor.*;
 import br.com.Bin.Fornecedor.Fornecedor;
 import br.com.Persistence.Banco;
 
@@ -61,7 +63,7 @@ public class JFrmCadastroContato extends JDialog implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFrmCadastroContato frame = new JFrmCadastroContato();
+					JFrmCadastroContato frame = new JFrmCadastroContato(0);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -72,8 +74,9 @@ public class JFrmCadastroContato extends JDialog implements ActionListener {
 
 	/**
 	 * Create the frame.
+	 * @param idContato 
 	 */
-	public JFrmCadastroContato() {
+	public JFrmCadastroContato(Integer idContato) {
 		setTitle("Cadastro de Contatos");
 		// setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 		setBounds(100, 100, 640, 477);
@@ -261,6 +264,10 @@ public class JFrmCadastroContato extends JDialog implements ActionListener {
 		btnSalvar.addActionListener(this);
 
 		apagar();
+		if (idContato!=0) {
+			txtCodPesq.setText(String.valueOf(idContato));
+			buscar();
+		}
 
 	}
 

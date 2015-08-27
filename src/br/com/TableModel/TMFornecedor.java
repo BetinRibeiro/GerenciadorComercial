@@ -6,14 +6,14 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import br.com.Bin.Funcionario.*;
+import br.com.Bin.Fornecedor.*;
 
 
 @SuppressWarnings("serial")
-public class TMFuncionario extends AbstractTableModel {
+public class TMFornecedor extends AbstractTableModel {
 
-	private List<Funcionario> dados;
-	private String[] colunas = { "Código", "Nome", "Cargo", "Telefone",
+	private List<Fornecedor> dados;
+	private String[] colunas = { "Código", "Nome", "Email", "Telefone",
 			};
 	DecimalFormat df = new DecimalFormat("0.00");
 
@@ -22,12 +22,12 @@ public class TMFuncionario extends AbstractTableModel {
 	// você vai precisar adicionar um TableModelListener ao seu model que
 	// executará o método
 	// tableChanged toda vez que os dados da JTable forem alterados.
-	public TMFuncionario() {
-		dados = new ArrayList<Funcionario>();
+	public TMFornecedor() {
+		dados = new ArrayList<Fornecedor>();
 
 	}
 
-	public void addRow(Funcionario p) {
+	public void addRow(Fornecedor p) {
 
 		this.dados.add(p);
 		this.fireTableDataChanged();
@@ -86,12 +86,12 @@ public class TMFuncionario extends AbstractTableModel {
 		case 0:
 			return dados.get(linha).getId();
 		case 1:
-			return dados.get(linha).getNome()+" "+dados.get(linha).getSobrenome();
+			return dados.get(linha).getNomeFantasia();
 		case 2:
-			return (dados.get(linha).getCargo().getDescricao());
+			return (dados.get(linha).getEmail());
 		
 		case 3:
-			return (dados.get(linha).getFone().getCelular());
+			return (dados.get(linha).getFone().getTelefone());
 
 		}
 		return null;
