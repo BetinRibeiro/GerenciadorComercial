@@ -32,7 +32,7 @@ public class JFrmConsultaCFOP extends JDialog implements
 	private Banco banco = new Banco();
 	private TMCFOP modelProd = new TMCFOP();
 	private int a;
-	private CFOP cfop;
+	private CFOP cfop=null;
 
 	/**
 	 * Launch the application.

@@ -4,6 +4,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.table.TableModel;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -22,11 +23,13 @@ import br.com.Bin.Produto.CFOP;
 import br.com.Bin.Produto.Produto;
 import br.com.Janela.Consulta.JFrmConsultaCFOP;
 import br.com.Janela.Consulta.JFrmConsultaProduto;
+import br.com.TableModel.*;
 
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.Font;
 
 public class JFrmCompraProduto extends JDialog implements ActionListener {
 	private JPanel contentPane;
@@ -36,21 +39,24 @@ public class JFrmCompraProduto extends JDialog implements ActionListener {
 	private DecimalFormat df = new DecimalFormat("0.00");
 	private SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
 	private JDateChooser dtEntrada;
-	private JTextField txtIdProd;
-	private JTextField txtNomeProd;
-	private JTextField txtCustoUnit;
-	private JTextField txtTotal;
-	private JTextField txtQuant;
 	private JTable table;
-	private JButton btnBuscarProd;
 	private JButton btnBuscarCFOP;
 	private JButton btnRecalcularTotal;
 	private JButton btnFinalizarEntrada;
 	private JButton btnCancelar;
-	private JButton btnConfirmarProduto;
 	private JButton btnExcluirProduto;
 	private JButton btnInserirProduto;
 	private JButton btnNovaEntrada;
+	private TMCompraProduto model = new TMCompraProduto();
+	private JLabel lblTotalGeral;
+	private JTextField txtTotalGeral;
+	private JPanel panel_3;
+	private JTextField txtIdProduto;
+	private JTextField txtNomeProduto;
+	private JTextField txtTotal;
+	private JTextField txtQuant;
+	private JTextField txtCusto;
+	private JButton btnPesquisar;
 
 	public static void main(String[] args) {
 		try {
@@ -64,14 +70,15 @@ public class JFrmCompraProduto extends JDialog implements ActionListener {
 
 	/**
 	 * Create the panel.
-	 * @param escolher 
+	 * 
+	 * @param escolher
 	 */
 	public JFrmCompraProduto() {
 		setTitle("Compra de Produtos");
 		getContentPane().setLayout(null);
 		setType(Type.UTILITY);
 		// setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 500);
+		setBounds(100, 100, 800, 540);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -83,7 +90,7 @@ public class JFrmCompraProduto extends JDialog implements ActionListener {
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel.setBounds(5, 5, 230, 250);
+		panel.setBounds(5, 5, 230, 272);
 		getContentPane().add(panel);
 		contentPane.setLayout(null);
 		panel.setLayout(null);
@@ -96,17 +103,13 @@ public class JFrmCompraProduto extends JDialog implements ActionListener {
 		btnInserirProduto.setBounds(10, 45, 210, 23);
 		panel.add(btnInserirProduto);
 
-		btnExcluirProduto = new JButton("Excluir Produto");
+		btnExcluirProduto = new JButton("Retirar Produto");
 		btnExcluirProduto.setBounds(10, 79, 210, 23);
 		panel.add(btnExcluirProduto);
 
 		btnCancelar = new JButton("Cancelar Entrada");
 		btnCancelar.setBounds(10, 113, 210, 23);
 		panel.add(btnCancelar);
-
-		btnConfirmarProduto = new JButton("Confirmar Produto");
-		btnConfirmarProduto.setBounds(10, 147, 210, 23);
-		panel.add(btnConfirmarProduto);
 
 		btnFinalizarEntrada = new JButton("Finalizar Entrada");
 		btnFinalizarEntrada.setBounds(10, 182, 210, 23);
@@ -118,7 +121,7 @@ public class JFrmCompraProduto extends JDialog implements ActionListener {
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_1.setBounds(245, 5, 530, 250);
+		panel_1.setBounds(245, 5, 530, 272);
 		getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
@@ -133,10 +136,6 @@ public class JFrmCompraProduto extends JDialog implements ActionListener {
 		JLabel lblTipoDeDocumento = new JLabel("Tipo de Documento");
 		lblTipoDeDocumento.setBounds(216, 10, 111, 14);
 		panel_1.add(lblTipoDeDocumento);
-
-		JLabel lblProduto = new JLabel("Produto");
-		lblProduto.setBounds(10, 145, 111, 14);
-		panel_1.add(lblProduto);
 
 		JLabel lblDataDoDocumento = new JLabel("Data do Documento");
 		lblDataDoDocumento.setBounds(10, 100, 111, 14);
@@ -154,10 +153,6 @@ public class JFrmCompraProduto extends JDialog implements ActionListener {
 		JLabel lblCdigoCfop = new JLabel("C\u00F3digo CFOP");
 		lblCdigoCfop.setBounds(216, 55, 111, 14);
 		panel_1.add(lblCdigoCfop);
-
-		JLabel lblToalDoPedido = new JLabel("Toal do Pedido");
-		lblToalDoPedido.setBounds(330, 190, 120, 14);
-		panel_1.add(lblToalDoPedido);
 
 		txtCodComp = new JTextField();
 		txtCodComp.setEnabled(false);
@@ -182,59 +177,73 @@ public class JFrmCompraProduto extends JDialog implements ActionListener {
 		txtCodCFOP.setBounds(216, 70, 161, 20);
 		panel_1.add(txtCodCFOP);
 
-		JLabel lblCustoUnitario = new JLabel("Custo Unitario");
-		lblCustoUnitario.setBounds(10, 190, 111, 14);
-		panel_1.add(lblCustoUnitario);
-
 		JDateChooser dtDoc = new JDateChooser(new java.util.Date());
 		dtDoc.setBounds(10, 115, 140, 20);
 		panel_1.add(dtDoc);
 
-		txtIdProd = new JTextField();
-		txtIdProd.setEnabled(false);
-		txtIdProd.setBounds(10, 160, 71, 20);
-		panel_1.add(txtIdProd);
-		txtIdProd.setColumns(10);
-
-		txtNomeProd = new JTextField();
-		txtNomeProd.setEnabled(false);
-		txtNomeProd.setBounds(91, 160, 286, 20);
-		panel_1.add(txtNomeProd);
-		txtNomeProd.setColumns(10);
-
-		txtCustoUnit = new JTextField();
-		txtCustoUnit.setText("0.00");
-		txtCustoUnit.setColumns(10);
-		txtCustoUnit.setBounds(10, 205, 86, 20);
-		panel_1.add(txtCustoUnit);
-
-		txtTotal = new JTextField();
-		txtTotal.setText("0.00");
-		txtTotal.setBounds(332, 205, 120, 20);
-		panel_1.add(txtTotal);
-		txtTotal.setColumns(10);
-
 		btnBuscarCFOP = new JButton("Buscar");
 		btnBuscarCFOP.setBounds(387, 69, 96, 23);
 		panel_1.add(btnBuscarCFOP);
-
-		btnBuscarProd = new JButton("Pesquisar");
-		btnBuscarProd.setBounds(387, 159, 96, 23);
-		panel_1.add(btnBuscarProd);
-
-		JLabel lblQuantidade = new JLabel("Quantidade");
-		lblQuantidade.setBounds(131, 190, 111, 14);
-		panel_1.add(lblQuantidade);
-
+		
+		panel_3 = new JPanel();
+		panel_3.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_3.setBounds(10, 146, 510, 115);
+		panel_1.add(panel_3);
+		panel_3.setLayout(null);
+		
+		JLabel label = new JLabel("Produto");
+		label.setBounds(10, 11, 111, 14);
+		panel_3.add(label);
+		
+		txtIdProduto = new JTextField();
+		txtIdProduto.setEnabled(false);
+		txtIdProduto.setColumns(10);
+		txtIdProduto.setBounds(10, 26, 71, 20);
+		panel_3.add(txtIdProduto);
+		
+		txtNomeProduto = new JTextField();
+		txtNomeProduto.setEnabled(false);
+		txtNomeProduto.setColumns(10);
+		txtNomeProduto.setBounds(91, 26, 286, 20);
+		panel_3.add(txtNomeProduto);
+		
+		btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.setBounds(387, 25, 96, 23);
+		panel_3.add(btnPesquisar);
+		
+		txtTotal = new JTextField();
+		txtTotal.setText("0.00");
+		txtTotal.setColumns(10);
+		txtTotal.setBounds(332, 71, 120, 20);
+		panel_3.add(txtTotal);
+		
 		txtQuant = new JTextField();
 		txtQuant.setText("0.00");
 		txtQuant.setColumns(10);
-		txtQuant.setBounds(131, 205, 86, 20);
-		panel_1.add(txtQuant);
+		txtQuant.setBounds(131, 71, 86, 20);
+		panel_3.add(txtQuant);
+		
+		JLabel label_1 = new JLabel("Quantidade");
+		label_1.setBounds(131, 56, 111, 14);
+		panel_3.add(label_1);
+		
+		JLabel label_2 = new JLabel("Custo Unitario");
+		label_2.setBounds(10, 56, 111, 14);
+		panel_3.add(label_2);
+		
+		txtCusto = new JTextField();
+		txtCusto.setText("0.00");
+		txtCusto.setColumns(10);
+		txtCusto.setBounds(10, 71, 86, 20);
+		panel_3.add(txtCusto);
+		
+		JLabel label_3 = new JLabel("Total ");
+		label_3.setBounds(330, 56, 120, 14);
+		panel_3.add(label_3);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_2.setBounds(5, 260, 770, 191);
+		panel_2.setBounds(5, 288, 770, 191);
 		getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 
@@ -242,19 +251,29 @@ public class JFrmCompraProduto extends JDialog implements ActionListener {
 		scrollPane.setBounds(1, 1, 768, 189);
 		panel_2.add(scrollPane);
 
-		table = new JTable();
+		table = new JTable(model);
 		scrollPane.setViewportView(table);
 		
+		lblTotalGeral = new JLabel("Total Geral");
+		lblTotalGeral.setBounds(565, 490, 80, 14);
+		contentPane.add(lblTotalGeral);
+		
+		txtTotalGeral = new JTextField();
+		txtTotalGeral.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtTotalGeral.setText("0.00");
+		txtTotalGeral.setColumns(10);
+		txtTotalGeral.setBounds(655, 485, 120, 20);
+		contentPane.add(txtTotalGeral);
+
 		btnBuscarCFOP.addActionListener(this);
-		btnBuscarProd.addActionListener(this);
 		btnCancelar.addActionListener(this);
-		btnConfirmarProduto.addActionListener(this);
 		btnExcluirProduto.addActionListener(this);
 		btnFinalizarEntrada.addActionListener(this);
 		btnInserirProduto.addActionListener(this);
 		btnNovaEntrada.addActionListener(this);
 		btnRecalcularTotal.addActionListener(this);
-		
+		btnPesquisar.addActionListener(this);
+
 	}
 
 	@Override
@@ -305,22 +324,31 @@ public class JFrmCompraProduto extends JDialog implements ActionListener {
 	}
 
 	private void buscarProd() {
-		JFrmConsultaProduto prod = new JFrmConsultaProduto("Escolher");	
-		prod.setModal(true);
-		prod.setVisible(true);
-		
-		Produto p = prod.getProduto();
-		txtIdProd.setText(String.valueOf(p.getId()));
-		txtNomeProd.setText(String.valueOf(p.getDescricao()));
-		prod.dispose();
+		try {
+			JFrmConsultaProduto prod = new JFrmConsultaProduto("Escolher");
+			prod.setModal(true);
+			prod.setVisible(true);
+
+			Produto p = prod.getProduto();
+			txtIdProduto.setText(String.valueOf(p.getId()));
+			txtNomeProduto.setText(String.valueOf(p.getDescricao()));
+			prod.dispose();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	private void buscarCFOP() {
-		JFrmConsultaCFOP cfop =new JFrmConsultaCFOP("Escolher");
-		cfop.setModal(true);
-		cfop.setVisible(true);
-		txtCodCFOP.setText(String.valueOf(cfop.getCfop().getCod()));
-		cfop.dispose();
-		
+		try {
+
+			JFrmConsultaCFOP cfop = new JFrmConsultaCFOP("Escolher");
+			cfop.setModal(true);
+			cfop.setVisible(true);
+			txtCodCFOP.setText(String.valueOf(cfop.getCfop().getCod()));
+			cfop.dispose();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 	}
 }

@@ -185,7 +185,7 @@ public class JFrmPrincipal extends JFrame {
 		foto.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		foto.setBounds(0, 0, 1060, 585);
 		ImageIcon imagem = new ImageIcon(
-				Main.class.getResource("/br/com/Img/img1.jpg"));
+				Main.class.getResource("/br/com/Img/03.jpg"));
 		Image img = imagem.getImage().getScaledInstance(foto.getWidth(),
 				foto.getHeight(), Image.SCALE_DEFAULT);
 		foto.setIcon(new ImageIcon(img));

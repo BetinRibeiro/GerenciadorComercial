@@ -35,7 +35,7 @@ public class JFrmConsultaProduto extends JDialog implements ActionListener {
 	private Banco banco = new Banco();
 	private TMProdutoMateriala modelProd = new TMProdutoMateriala();
 	private int a;
-	private Produto produto;
+	private Produto produto = null;
 
 	/**
 	 * Launch the application.
